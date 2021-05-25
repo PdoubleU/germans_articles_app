@@ -1,3 +1,3 @@
 {
-    "licence": "MIT"
+    "license": "MIT"
 }
