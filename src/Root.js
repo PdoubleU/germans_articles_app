@@ -1,5 +1,5 @@
-import "./style.css";
-import Login from "./views/Login";
+import './style.css';
+import Login from './views/Login';
 
 function Root() {
   return (
