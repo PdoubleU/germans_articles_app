@@ -8,6 +8,7 @@ function Login(props) {
       <input type="text"></input>
       <label>Password</label>
       <input type="password"></input>
+      <button type="submit">Login</button>
     </form>
   );
 }
