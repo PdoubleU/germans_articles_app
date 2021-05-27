@@ -13,6 +13,8 @@ function Login(props) {
   );
 }
 
-Login.propTypes = {};
+Login.propTypes = {
+  props: PropTypes.element,
+};
 
 export default Login;
