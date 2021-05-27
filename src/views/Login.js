@@ -1,15 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import { LoggedUserContext } from '../providers/UserAuthProvider';
+import styled from 'styled-components';
+import MainView from './MainView';
 
-function Login(props) {
+const Button = styled.button`
+  padding: 0.6rem 1.2rem;
+`;
+function Login() {
+  const cxt = useContext(LoggedUserContext);
+  console.log(cxt);
   return (
-    <form>
-      <label>Username</label>
-      <input type="text"></input>
-      <label>Password</label>
-      <input type="password"></input>
-      <button type="submit">Login</button>
-    </form>
+    <>
+      {cxt.isLogged ? <MainView></MainView> : <div>need to log in</div>}
+      <Button onClick={cxt.logIn}>Log in</Button>
+    </>
   );
 }
 

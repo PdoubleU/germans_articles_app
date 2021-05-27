@@ -1,21 +1,24 @@
 import './style.css';
 import Login from './views/Login';
-import netlifyIdentity from 'netlify-identity-widget';
+import { UserAuthProvider } from '../src/providers/UserAuthProvider';
+import styled from 'styled-components';
 
-netlifyIdentity.init({});
+const Wrapper = styled.div`
+  background-color: #bada55;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 function Root() {
   return (
     <>
-      <h2>This is root</h2>
-      <button
-        onClick={() => {
-          netlifyIdentity.open();
-        }}
-      >
-        Login
-      </button>
-      <Login></Login>
+      <Wrapper>
+        <UserAuthProvider>
+          <Login></Login>
+        </UserAuthProvider>
+      </Wrapper>
     </>
   );
 }
