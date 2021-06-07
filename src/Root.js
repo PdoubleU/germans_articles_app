@@ -1,7 +1,10 @@
 import './style.css';
-import Login from './views/Login';
-import { UserAuthProvider } from '../src/providers/UserAuthProvider';
+import UnauthView from './views/UnauthView';
+import AuthView from './views/AuthView';
+import LoadingView from './views/LoadingView';
+import { UsersContext } from '../src/providers/UserAuthProvider';
 import styled from 'styled-components';
+import { useContext } from 'react';
 
 const Wrapper = styled.div`
   background-color: #bada55;
@@ -12,14 +15,18 @@ const Wrapper = styled.div`
 `;
 
 function Root() {
+  const cxt = useContext(UsersContext);
+
   return (
-    <>
-      <Wrapper>
-        <UserAuthProvider>
-          <Login></Login>
-        </UserAuthProvider>
-      </Wrapper>
-    </>
+    <Wrapper>
+      <h2>this is root</h2>
+      {cxt.loading ? <LoadingView></LoadingView> : null}
+      {!cxt.loading && !cxt.isLogged ? (
+        <UnauthView handleClick={cxt.logIn}></UnauthView>
+      ) : (
+        <AuthView handleClick={cxt.logOut} user={cxt.user}></AuthView>
+      )}
+    </Wrapper>
   );
 }
 

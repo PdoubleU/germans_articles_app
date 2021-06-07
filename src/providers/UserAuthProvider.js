@@ -1,36 +1,59 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import netlifyIdentity from 'netlify-identity-widget';
 import PropTypes from 'prop-types';
+import netlifyAuth from './NetlifyAuthHelper';
 
-export const LoggedUserContext = React.createContext({
+export const UsersContext = React.createContext({
   logIn: () => {},
   logOut: () => {},
   isLogged: false,
+  loading: true,
 });
 
 export function UserAuthProvider({ children }) {
-  console.log(children);
+  const [isLogged, setIsLogged] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState('');
+
   useEffect(() => {
-    netlifyIdentity.init({});
-  });
+    netlifyAuth.initialize((user) => {
+      setIsLogged(!!user);
+    });
+  }, [isLogged]);
+
+  useEffect(() => {
+    window.netlifyIdentity = netlifyIdentity;
+    netlifyIdentity.on('init', ({ user_metadata: { full_name } }) => {
+      console.log(full_name);
+      setUser(full_name);
+      setIsLogged(true);
+    });
+    netlifyIdentity.init();
+  }, []);
 
   const logIn = () => {
     netlifyIdentity.open();
+    netlifyIdentity.on('login', ({ user_metadata: { full_name } }) => {
+      setUser(full_name);
+      setIsLogged(true);
+    });
   };
   const logOut = () => {
     netlifyIdentity.logout();
+    setIsLogged(false);
   };
 
   return (
-    <LoggedUserContext.Provider
+    <UsersContext.Provider
       value={{
         logIn,
         logOut,
-        isLogged: true,
+        isLogged,
+        loading,
       }}
     >
       {children}
-    </LoggedUserContext.Provider>
+    </UsersContext.Provider>
   );
 }
 
