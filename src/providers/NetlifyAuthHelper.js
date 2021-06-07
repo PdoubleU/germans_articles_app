@@ -4,11 +4,12 @@ const netlifyAuth = {
   isAuthenticated: false,
   user: null,
   initialize(callback) {
+    netlifyIdentity.close();
     window.netlifyIdentity = netlifyIdentity;
-    netlifyIdentity.on('init', ({ user_metadata: { full_name } }) => {
-      callback(full_name);
+    netlifyIdentity.on('init', (user) => {
+      callback(user);
     });
-    netlifyIdentity.init();
+    netlifyIdentity.init({});
   },
   authenticate(callback) {
     this.isAuthenticated = true;
@@ -16,7 +17,6 @@ const netlifyAuth = {
     netlifyIdentity.on('login', ({ user_metadata: { full_name } }) => {
       this.user = full_name;
       callback(this.user);
-      netlifyIdentity.close();
     });
   },
   signout(callback) {
@@ -26,6 +26,7 @@ const netlifyAuth = {
       this.user = null;
       callback();
     });
+    netlifyIdentity.close();
   },
 };
 
