@@ -1,25 +1,20 @@
 import './style.css';
-import Login from './views/Login';
-import { UserAuthProvider } from '../src/providers/UserAuthProvider';
-import styled from 'styled-components';
-
-const Wrapper = styled.div`
-  background-color: #bada55;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+import UnauthView from './views/UnauthView';
+import AuthView from './views/AuthView';
+import LoadingView from './views/LoadingView';
+import { UsersContext } from '../src/providers/UserAuthProvider';
+import { useContext } from 'react';
 
 function Root() {
-  return (
-    <>
-      <Wrapper>
-        <UserAuthProvider>
-          <Login></Login>
-        </UserAuthProvider>
-      </Wrapper>
-    </>
+  const cxt = useContext(UsersContext);
+
+  if (cxt.loading) {
+    return <LoadingView></LoadingView>;
+  }
+  return !cxt.loading && !cxt.isLogged ? (
+    <UnauthView handleClick={cxt.logIn}></UnauthView>
+  ) : (
+    <AuthView handleClick={cxt.logOut} user={cxt.user}></AuthView>
   );
 }
 

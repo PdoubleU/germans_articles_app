@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
-import App from './Root';
+import LoadingView from './views/LoadingView';
 
 test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/this is root/i);
+  render(<LoadingView />);
+  const linkElement = screen.getByText(/Please wait/i);
   expect(linkElement).toBeInTheDocument();
 });
