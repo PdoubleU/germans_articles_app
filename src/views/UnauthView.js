@@ -1,21 +1,17 @@
-import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import React from 'react';
+import StyledButton from '../components/reusables/Button';
+import { UsersContext } from '../providers/UserAuthProvider';
+import { useContext } from 'react';
 
-const Button = styled.button`
-  padding: 0.6rem 1.2rem;
-`;
-function UnauthView({ handleClick }) {
+function UnauthView() {
+  const cxt = useContext(UsersContext);
+
   return (
     <>
-      <div>need to log in</div>
-      <Button onClick={handleClick}>Log in</Button>
+      <div>Please log in</div>
+      <StyledButton handleClick={cxt.logIn} description="Log in" />
     </>
   );
 }
-
-UnauthView.propTypes = {
-  props: PropTypes.element,
-};
 
 export default UnauthView;

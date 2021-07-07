@@ -9,13 +9,9 @@ function Root() {
   const cxt = useContext(UsersContext);
 
   if (cxt.loading) {
-    return <LoadingView></LoadingView>;
+    return <LoadingView />;
   }
-  return !cxt.loading && !cxt.isLogged ? (
-    <UnauthView handleClick={cxt.logIn}></UnauthView>
-  ) : (
-    <AuthView handleClick={cxt.logOut} user={cxt.user}></AuthView>
-  );
+  return !cxt.loading && !cxt.isLogged ? <UnauthView /> : <AuthView />;
 }
 
 export default Root;

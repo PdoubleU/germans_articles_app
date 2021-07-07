@@ -1,18 +1,16 @@
 import React from 'react';
-//import PropTypes from 'prop-types'
+import StyledButton from '../components/reusables/Button';
+import { UsersContext } from '../providers/UserAuthProvider';
+import { useContext } from 'react';
 
-function AuthView({ handleClick, user }) {
-  console.log(handleClick);
+function AuthView() {
+  const cxt = useContext(UsersContext);
+
   return (
     <div>
-      <h2>Welcome, {user} is logged in</h2>
-      <button onClick={handleClick}>Log out</button>
+      <h2>{cxt.user} is logged in</h2>
     </div>
   );
 }
-
-// MainView.propTypes = {
-
-// }
 
 export default AuthView;

@@ -1,5 +1,4 @@
 import React from 'react';
-//import PropTypes from 'prop-types'
 
 function LoadingView() {
   return (
@@ -8,9 +7,4 @@ function LoadingView() {
     </div>
   );
 }
-
-// LoadingView.propTypes = {
-
-// }
-
 export default LoadingView;
