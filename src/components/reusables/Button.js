@@ -10,6 +10,7 @@ const Button = ({ className, handleClick, description }) => {
 
 const StyledButton = styled(Button)`
   padding: 0.6rem 1.2rem;
+  font-size: ${({ props, theme }) => theme.fontSize[props]};
 `;
 
 export default StyledButton;

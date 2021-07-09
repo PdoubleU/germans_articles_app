@@ -1,14 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import StyledButton from '../components/reusables/Button';
-import { UsersContext } from '../providers/UserAuthProvider';
-import { useContext } from 'react';
+import AddNounToDB from '../components/form/AddNounToDB';
 
 function AuthView() {
-  const cxt = useContext(UsersContext);
+  const [isFormOpen, setIsFormOpen] = useState(false);
 
-  return (
-    <div>
-      <h2>{cxt.user} is logged in</h2>
+  const openForm = () => setIsFormOpen(true);
+
+  return isFormOpen ? (
+    <AddNounToDB />
+  ) : (
+    <div className="auth-view">
+      <StyledButton handleClick={openForm} description="Add word" />
+      <StyledButton
+        handleClick={() => alert('play game')}
+        description="Play game"
+      />
     </div>
   );
 }

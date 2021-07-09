@@ -1,17 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import Root from './Root';
 import { UserAuthProvider } from './providers/UserAuthProvider';
 import MainTemplate from './templates/MainTemplate';
+import { GlobalStyles } from './assets/styles/globalStyles';
+import { theme } from './assets/styles/theme';
+import { ThemeProvider } from 'styled-components';
 
 ReactDOM.render(
   <React.StrictMode>
-    <UserAuthProvider>
-      <MainTemplate>
-        <Root />
-      </MainTemplate>
-    </UserAuthProvider>
+    <ThemeProvider theme={theme}>
+      <GlobalStyles />
+      <UserAuthProvider>
+        <MainTemplate>
+          <Root />
+        </MainTemplate>
+      </UserAuthProvider>
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

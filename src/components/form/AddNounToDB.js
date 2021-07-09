@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import StyledButton from '../reusables/Button';
 //import PropTypes from 'prop-types'
 
 const AddNounForm = styled.div`
@@ -14,7 +15,8 @@ function AddNounToDB() {
     noun: '',
     article: '',
   });
-  const saveWord = () => console.log('Commiting thought to memory…');
+
+  const saveWord = () => alert('Commiting thought to memory…');
   const handleWordChange = (e) =>
     setWord({ ...word, [e.target.name]: e.target.value });
 
@@ -35,7 +37,7 @@ function AddNounToDB() {
         value={word.article}
         onChange={handleWordChange}
       />
-      <button onClick={saveWord}>Commit to memory</button>
+      <StyledButton handleClick={saveWord} description="Add" />
     </AddNounForm>
   );
 }
