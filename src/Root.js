@@ -1,4 +1,3 @@
-import './style.css';
 import UnauthView from './views/UnauthView';
 import AuthView from './views/AuthView';
 import LoadingView from './views/LoadingView';

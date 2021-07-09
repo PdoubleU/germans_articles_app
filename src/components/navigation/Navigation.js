@@ -11,7 +11,11 @@ const Navbar = ({ className }) => {
     <nav className={className}>
       <StyledLink href="/" />
       {!cxt.loading && cxt.isLogged ? (
-        <StyledButton handleClick={cxt.logOut} description="Log out" />
+        <StyledButton
+          handleClick={cxt.logOut}
+          description="Log out"
+          props="xs"
+        />
       ) : null}
     </nav>
   );
