@@ -1,7 +1,7 @@
-import UnauthView from './views/UnauthView';
-import AuthView from './views/AuthView';
-import LoadingView from './views/LoadingView';
-import { UsersContext } from '../src/providers/UserAuthProvider';
+import UnauthView from './UnauthView';
+import AuthView from './AuthView';
+import LoadingView from './LoadingView';
+import { UsersContext } from '../providers/UserAuthProvider';
 import { useContext } from 'react';
 
 function Root() {

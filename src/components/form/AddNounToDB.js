@@ -1,6 +1,7 @@
-import React, { useRef } from 'react';
+import React, { useContext, useRef } from 'react';
 import styled from 'styled-components';
 import StyledButton from '../reusables/Button';
+import { DictionaryContext } from '../../providers/DictionaryProvider';
 
 const AddNounForm = styled.form`
   display: flex;
@@ -10,6 +11,7 @@ const AddNounForm = styled.form`
 `;
 
 function AddNounToDB() {
+  const ctx = useContext(DictionaryContext);
   const word = useRef({
     noun: '',
     article: '',
@@ -17,11 +19,10 @@ function AddNounToDB() {
 
   const saveWord = (e) => {
     e.preventDefault();
-    console.log(word.current);
+    ctx.addData(word.current);
   };
 
   const handleWordChange = (e) => {
-    console.log(word);
     word.current = { ...word.current, [e.target.name]: e.target.value };
   };
 
