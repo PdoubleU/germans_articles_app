@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Root from './Root';
+import Root from './views/Root';
 import { UserAuthProvider } from './providers/UserAuthProvider';
 import MainTemplate from './templates/MainTemplate';
 import { GlobalStyles } from './assets/styles/globalStyles';
