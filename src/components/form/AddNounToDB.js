@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import StyledButton from '../reusables/Button';
-//import PropTypes from 'prop-types'
 
-const AddNounForm = styled.div`
+const AddNounForm = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -11,18 +10,23 @@ const AddNounForm = styled.div`
 `;
 
 function AddNounToDB() {
-  const [word, setWord] = useState({
+  const word = useRef({
     noun: '',
     article: '',
   });
 
-  const saveWord = () => alert('Commiting thought to memory…');
-  const handleWordChange = (e) =>
-    setWord({ ...word, [e.target.name]: e.target.value });
+  const saveWord = (e) => {
+    e.preventDefault();
+    console.log(word.current);
+  };
+
+  const handleWordChange = (e) => {
+    console.log(word);
+    word.current = { ...word.current, [e.target.name]: e.target.value };
+  };
 
   return (
     <AddNounForm className="App">
-      <h1>Add new noun</h1>
       <input
         type="text"
         name="noun"
@@ -41,9 +45,5 @@ function AddNounToDB() {
     </AddNounForm>
   );
 }
-
-// AddNounToDB.propTypes = {
-
-// }
 
 export default AddNounToDB;
