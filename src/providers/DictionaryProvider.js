@@ -1,10 +1,39 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
+// below temporary data from fauna db to handle references
+// {
+//     "ref": Ref(Collection("articles"), "304029321487450636"),
+//     "ts": 1626203805340000,
+//     "data": {
+//       "article": "der"
+//     }
+//   }
+
+//   {
+//     "ref": Ref(Collection("articles"), "304029334979478028"),
+//     "ts": 1626203818200000,
+//     "data": {
+//       "article": "das"
+//     }
+//   }
+
+//   {
+//   "ref": Ref(Collection("articles"), "304029355755962892"),
+//   "ts": 1626203838020000,
+//   "data": {
+//     "article": "die"
+//   }
+// }
+
 const mockupDictionary = [
-  { noun: 'Auto', article: 'das' },
-  { noun: 'Baum', article: 'das' },
-  { noun: 'Katze', article: 'die' },
+  { nounDE: 'Geste, -n', article: 'die', nounPL: 'gest' },
+  { nounDE: 'Wade, -n', article: 'die', nounPL: 'łydka' },
+  { nounDE: 'Atem', article: 'der', nounPL: 'oddech' },
+  { nounDE: 'Knochen', article: 'der', nounPL: 'kość' },
+  { nounDE: 'Nagel, -:', article: 'der', nounPL: 'paznokieć' },
+  { nounDE: 'Knie', article: 'das', nounPL: 'kolano' },
+  { nounDE: 'Skelett, -e', article: 'das', nounPL: 'szkielet, kościec' },
 ];
 
 const initialState =
@@ -18,13 +47,20 @@ export const DictionaryContext = React.createContext({
 export const DictionaryProvider = ({ children }) => {
   const [localDictionary, setLocalDictionary] = useState(mockupDictionary);
 
-  const addData = ({ noun, article }) => {
-    if (localDictionary.some((obj) => obj.noun === noun))
-      return console.log('such word already added!', noun, article);
-    setLocalDictionary([...localDictionary, { noun, article }]);
+  console.log(localDictionary);
+
+  const getWord = ({ word }) => {
+    console.log('get word');
+    console.log(word);
+  };
+
+  const addWord = ({ nounDE, article, nounPL }) => {
+    if (localDictionary.some((obj) => obj.nounDE === nounDE))
+      return console.log('such word already added!', nounDE, article);
+    setLocalDictionary([...localDictionary, { nounDE, article, nounPL }]);
   };
   return (
-    <DictionaryContext.Provider value={{ addData }}>
+    <DictionaryContext.Provider value={{ addWord }}>
       {children}
     </DictionaryContext.Provider>
   );
