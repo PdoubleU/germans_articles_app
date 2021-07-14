@@ -1,58 +1,70 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import StyledButton from '../reusables/Button';
 import { DictionaryContext } from '../../providers/DictionaryProvider';
 import { FormField } from './form_field/FormField';
 
-const AddNounForm = styled.form`
+const AddWordForm = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 `;
 
-function AddNounToDB() {
+const initialRef = {
+  nounDE: '',
+  article: '',
+  nounPL: '',
+};
+
+const AddWordToDB = () => {
   const ctx = useContext(DictionaryContext);
-  const word = useRef({
-    nounDE: '',
-    article: '',
-    nounPL: '',
-  });
+  const inputRef = useRef(initialRef);
+  const formRef = useRef(null);
+  const focusRef = useRef(null);
+
+  useEffect(() => {
+    focusRef.current && focusRef.current.focus();
+  }, []);
 
   const saveWord = (e) => {
-    console.log(word.current);
     e.preventDefault();
-    ctx.addWord(word.current);
+    ctx.addWord(inputRef.current);
+    formRef.current.reset();
   };
 
   const handleWordChange = (e) => {
-    console.log(e.target.value);
-    word.current = { ...word.current, [e.target.name]: e.target.value };
+    inputRef.current = { ...inputRef.current, [e.target.name]: e.target.value };
   };
 
   return (
-    <AddNounForm className="App">
+    <AddWordForm onSubmit={saveWord} ref={formRef}>
+      <p>{inputRef.current.nounDE}</p>
       <FormField
         label="Your word"
         name="nounDE"
         id="nounDE"
-        onChangeHandler={handleWordChange}
+        value={inputRef.nounDE}
+        onChange={handleWordChange}
+        ref={focusRef}
       ></FormField>
       <FormField
         label="Article"
         name="article"
         id="article"
-        onChangeHandler={handleWordChange}
+        value={inputRef.article}
+        onChange={handleWordChange}
       ></FormField>
       <FormField
         label="Meaning"
         name="nounPL"
         id="nounPL"
-        onChangeHandler={handleWordChange}
+        value={inputRef.nounPL}
+        onChange={handleWordChange}
       ></FormField>
-      <StyledButton handleClick={saveWord} description="Add" />
-    </AddNounForm>
+      <StyledButton type="submit">Add</StyledButton>
+    </AddWordForm>
   );
-}
+};
 
-export default AddNounToDB;
+export default AddWordToDB;

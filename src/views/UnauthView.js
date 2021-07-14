@@ -3,15 +3,15 @@ import StyledButton from '../components/reusables/Button';
 import { UsersContext } from '../providers/UserAuthProvider';
 import { useContext } from 'react';
 
-function UnauthView() {
+const UnauthView = () => {
   const cxt = useContext(UsersContext);
 
   return (
     <>
       <div>Please log in</div>
-      <StyledButton handleClick={cxt.logIn} description="Log in" />
+      <StyledButton onClick={cxt.logIn}>Log in</StyledButton>
     </>
   );
-}
+};
 
 export default UnauthView;
