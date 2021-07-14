@@ -1,10 +1,10 @@
-import { forwardRef } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Input } from './Input';
 import { Label } from './Label';
 
-const FormField = forwardRef(
-  ({ label, name, id, type = 'text', onChange, value }, ref) => {
+const FormField = React.forwardRef(
+  ({ label, name, id, type = 'text', onChange, value, placeholder }, ref) => {
     return (
       <>
         <Label htmlFor={id}>{label}</Label>
@@ -15,6 +15,7 @@ const FormField = forwardRef(
           type={type}
           onChange={onChange}
           value={value}
+          placeholder={placeholder}
         ></Input>
       </>
     );

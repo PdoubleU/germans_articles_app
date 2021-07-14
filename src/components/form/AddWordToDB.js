@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import StyledButton from '../reusables/Button';
 import { DictionaryContext } from '../../providers/DictionaryProvider';
-import { FormField } from './form_field/FormField';
+import FormField from './form_field/FormField';
 
 const AddWordForm = styled.form`
   display: flex;
@@ -39,13 +39,13 @@ const AddWordToDB = () => {
 
   return (
     <AddWordForm onSubmit={saveWord} ref={formRef}>
-      <p>{inputRef.current.nounDE}</p>
       <FormField
         label="Your word"
         name="nounDE"
         id="nounDE"
         value={inputRef.nounDE}
         onChange={handleWordChange}
+        placeholder="type German word"
         ref={focusRef}
       ></FormField>
       <FormField
@@ -54,6 +54,7 @@ const AddWordToDB = () => {
         id="article"
         value={inputRef.article}
         onChange={handleWordChange}
+        placeholder="type article"
       ></FormField>
       <FormField
         label="Meaning"
@@ -61,6 +62,7 @@ const AddWordToDB = () => {
         id="nounPL"
         value={inputRef.nounPL}
         onChange={handleWordChange}
+        placeholder="translation"
       ></FormField>
       <StyledButton type="submit">Add</StyledButton>
     </AddWordForm>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import StyledButton from '../components/reusables/Button';
-import AddWordToDB from '../components/form/AddNounToDB';
+import AddWordToDB from '../components/form/AddWordToDB';
 import { DictionaryProvider } from '../providers/DictionaryProvider';
 
 const AuthView = () => {
