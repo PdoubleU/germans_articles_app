@@ -2,6 +2,7 @@ import React, { useContext, useRef } from 'react';
 import styled from 'styled-components';
 import StyledButton from '../reusables/Button';
 import { DictionaryContext } from '../../providers/DictionaryProvider';
+import { FormField } from './form_field/FormField';
 
 const AddNounForm = styled.form`
   display: flex;
@@ -25,32 +26,30 @@ function AddNounToDB() {
   };
 
   const handleWordChange = (e) => {
+    console.log(e.target.value);
     word.current = { ...word.current, [e.target.name]: e.target.value };
   };
 
   return (
     <AddNounForm className="App">
-      <input
-        type="text"
+      <FormField
+        label="Your word"
         name="nounDE"
-        placeholder="Your German noun"
-        value={word.nounDE}
-        onChange={handleWordChange}
-      />
-      <input
-        type="text"
+        id="nounDE"
+        onChangeHandler={handleWordChange}
+      ></FormField>
+      <FormField
+        label="Article"
         name="article"
-        placeholder="Article"
-        value={word.article}
-        onChange={handleWordChange}
-      />
-      <input
-        type="text"
+        id="article"
+        onChangeHandler={handleWordChange}
+      ></FormField>
+      <FormField
+        label="Meaning"
         name="nounPL"
-        placeholder="Meaning in Polish"
-        value={word.nounPL}
-        onChange={handleWordChange}
-      />
+        id="nounPL"
+        onChangeHandler={handleWordChange}
+      ></FormField>
       <StyledButton handleClick={saveWord} description="Add" />
     </AddNounForm>
   );
