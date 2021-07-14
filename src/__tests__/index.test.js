@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import LoadingView from './views/LoadingView';
+import LoadingView from '../views/LoadingView';
 
 test('renders learn react link', () => {
   render(<LoadingView />);

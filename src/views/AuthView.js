@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import StyledButton from '../components/reusables/Button';
-import AddNounToDB from '../components/form/AddNounToDB';
+import AddWordToDB from '../components/form/AddWordToDB';
 import { DictionaryProvider } from '../providers/DictionaryProvider';
 
-function AuthView() {
+const AuthView = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
 
   const openForm = () => setIsFormOpen(true);
@@ -11,18 +11,15 @@ function AuthView() {
   return (
     <DictionaryProvider>
       {isFormOpen ? (
-        <AddNounToDB />
+        <AddWordToDB />
       ) : (
         <div className="auth-view">
-          <StyledButton handleClick={openForm} description="Add word" />
-          <StyledButton
-            handleClick={() => alert('play game')}
-            description="Play game"
-          />
+          <StyledButton onClick={openForm}>Add word</StyledButton>
+          <StyledButton onClick={() => alert('play game')}>Play</StyledButton>
         </div>
       )}
     </DictionaryProvider>
   );
-}
+};
 
 export default AuthView;
