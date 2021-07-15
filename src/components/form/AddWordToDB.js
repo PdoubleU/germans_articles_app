@@ -29,7 +29,7 @@ const AddWordToDB = () => {
 
   const saveWord = (e) => {
     e.preventDefault();
-    ctx.addWord(inputRef.current);
+    ctx.addData(inputRef.current);
     formRef.current.reset();
   };
 

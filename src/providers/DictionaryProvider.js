@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import getNounAPI from '../api/getNounAPI';
 
 // below temporary data from fauna db to handle references
 // {
@@ -42,27 +43,26 @@ const initialState =
 
 export const DictionaryContext = React.createContext({
   addData: () => {},
+  getData: () => {},
 });
 
 export const DictionaryProvider = ({ children }) => {
   const [localDictionary, setLocalDictionary] = useState(mockupDictionary);
 
-  console.log(localDictionary);
+  console.log('load provider');
 
-  const getWord = ({ word }) => {
+  const getData = () => {
     console.log('get word');
-    console.log(word);
+    console.log(getNounAPI());
   };
 
-  const addWord = ({ nounDE, article, nounPL }) => {
-    let fauna_token = process.env.REACT_APP_DB_KEY;
-    console.log(fauna_token);
+  const addData = ({ nounDE, article, nounPL }) => {
     if (localDictionary.some((obj) => obj.nounDE === nounDE))
       return console.log('such word already added!', nounDE, article);
     setLocalDictionary([...localDictionary, { nounDE, article, nounPL }]);
   };
   return (
-    <DictionaryContext.Provider value={{ addWord }}>
+    <DictionaryContext.Provider value={{ addData, getData }}>
       {children}
     </DictionaryContext.Provider>
   );
