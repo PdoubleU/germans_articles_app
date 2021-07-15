@@ -55,6 +55,8 @@ export const DictionaryProvider = ({ children }) => {
   };
 
   const addWord = ({ nounDE, article, nounPL }) => {
+    let fauna_token = process.env.REACT_APP_DB_KEY;
+    console.log(fauna_token);
     if (localDictionary.some((obj) => obj.nounDE === nounDE))
       return console.log('such word already added!', nounDE, article);
     setLocalDictionary([...localDictionary, { nounDE, article, nounPL }]);
