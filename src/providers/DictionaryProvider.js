@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import getNounAPI from '../api/getNounAPI';
+import addNounAPI from '../api/addNounAPI';
+import isNounInDictionaryAPI from '../api/isNounInDictionaryAPI';
 
 // below temporary data from fauna db to handle references
 // {
@@ -48,19 +50,21 @@ export const DictionaryContext = React.createContext({
 
 export const DictionaryProvider = ({ children }) => {
   const [localDictionary, setLocalDictionary] = useState(mockupDictionary);
-
-  console.log('load provider');
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   const getData = () => {
     console.log('get word');
     console.log(getNounAPI());
   };
 
-  const addData = ({ nounDE, article, nounPL }) => {
-    if (localDictionary.some((obj) => obj.nounDE === nounDE))
-      return console.log('such word already added!', nounDE, article);
-    setLocalDictionary([...localDictionary, { nounDE, article, nounPL }]);
+  const addData = (props) => {
+    isNounInDictionaryAPI(props).then((response) => {
+      response ? setIsError(true) : addNounAPI(props);
+      console.log(isError);
+    });
   };
+
   return (
     <DictionaryContext.Provider value={{ addData, getData }}>
       {children}

@@ -12,9 +12,9 @@ describe('Form field', () => {
   });
   it('Handles value change', () => {
     renderThemeProvider(<AddWordToDB />);
-    const inputWord = screen.getByPlaceholderText('type German word');
-    const inputArticle = screen.getByPlaceholderText('type article');
-    const inputTranslation = screen.getByPlaceholderText('translation');
+    const inputWord = screen.getByPlaceholderText('ex. Geste, -n');
+    const inputArticle = screen.getByPlaceholderText('ex. die');
+    const inputTranslation = screen.getByPlaceholderText('ex. gest');
     fireEvent.change(inputWord, { target: { value: 'Auto' } });
     fireEvent.change(inputArticle, { target: { value: 'das' } });
     fireEvent.change(inputTranslation, { target: { value: 'samochód' } });

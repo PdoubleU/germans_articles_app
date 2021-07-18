@@ -45,7 +45,7 @@ const AddWordToDB = () => {
         id="nounDE"
         value={inputRef.nounDE}
         onChange={handleWordChange}
-        placeholder="type German word"
+        placeholder="ex. Geste, -n"
         ref={focusRef}
       ></FormField>
       <FormField
@@ -54,7 +54,7 @@ const AddWordToDB = () => {
         id="article"
         value={inputRef.article}
         onChange={handleWordChange}
-        placeholder="type article"
+        placeholder="ex. die"
       ></FormField>
       <FormField
         label="Meaning"
@@ -62,7 +62,7 @@ const AddWordToDB = () => {
         id="nounPL"
         value={inputRef.nounPL}
         onChange={handleWordChange}
-        placeholder="translation"
+        placeholder="ex. gest"
       ></FormField>
       <StyledButton type="submit">Add</StyledButton>
     </AddWordForm>
