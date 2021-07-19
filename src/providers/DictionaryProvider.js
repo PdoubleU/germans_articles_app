@@ -4,30 +4,7 @@ import getNounAPI from '../api/getNounAPI';
 import addNounAPI from '../api/addNounAPI';
 import isNounInDictionaryAPI from '../api/isNounInDictionaryAPI';
 
-// below temporary data from fauna db to handle references
-// {
-//     "ref": Ref(Collection("articles"), "304029321487450636"),
-//     "ts": 1626203805340000,
-//     "data": {
-//       "article": "der"
-//     }
-//   }
-
-//   {
-//     "ref": Ref(Collection("articles"), "304029334979478028"),
-//     "ts": 1626203818200000,
-//     "data": {
-//       "article": "das"
-//     }
-//   }
-
-//   {
-//   "ref": Ref(Collection("articles"), "304029355755962892"),
-//   "ts": 1626203838020000,
-//   "data": {
-//     "article": "die"
-//   }
-// }
+import useFiniteStateMachine from '../hooks/useFiniteStateMachine';
 
 const mockupDictionary = [
   { nounDE: 'Geste, -n', article: 'die', nounPL: 'gest' },
@@ -39,34 +16,36 @@ const mockupDictionary = [
   { nounDE: 'Skelett, -e', article: 'das', nounPL: 'szkielet, kościec' },
 ];
 
-const initialState =
-  JSON.parse(window.localStorage.getItem('localDictionary')) ||
-  mockupDictionary;
-
 export const DictionaryContext = React.createContext({
   addData: () => {},
   getData: () => {},
+  currentState: '',
 });
 
 export const DictionaryProvider = ({ children }) => {
   const [localDictionary, setLocalDictionary] = useState(mockupDictionary);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const [currentState, updateState] = useFiniteStateMachine();
 
   const getData = () => {
+    updateState('FETCH_DATA'); // isLoading
     console.log('get word');
     console.log(getNounAPI());
   };
 
   const addData = (props) => {
+    updateState('FETCH_DATA'); // isLoading
     isNounInDictionaryAPI(props).then((response) => {
-      response ? setIsError(true) : addNounAPI(props);
-      console.log(isError);
+      if (response) return updateState('FETCH_DATA_ERROR'); // isError
+      addNounAPI(props).then((response) => {
+        response
+          ? updateState('FETCH_DATA_SUCCESS') // hasLoaded
+          : updateState('FETCH_DATA_ERROR'); // hasError
+      });
     });
   };
 
   return (
-    <DictionaryContext.Provider value={{ addData, getData }}>
+    <DictionaryContext.Provider value={{ addData, getData, currentState }}>
       {children}
     </DictionaryContext.Provider>
   );

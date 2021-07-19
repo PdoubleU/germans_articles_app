@@ -17,7 +17,7 @@ const addNounAPI = (props) => {
     }
   };
   console.log(nounDE, article, nounPL);
-  client
+  return client
     .query(
       q.Create(q.Collection('nouns'), {
         data: {
@@ -27,10 +27,13 @@ const addNounAPI = (props) => {
         },
       })
     )
-    .then((response) => {
+    .then(() => {
       console.log('api post');
-      return response;
+      return true;
     })
-    .catch((error) => console.log('Error: ', error.message));
+    .catch((error) => {
+      console.log('Error: ', error.message);
+      return false;
+    });
 };
 export default addNounAPI;
