@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import getNounAPI from '../api/getNounAPI';
+import getNounsAPI from '../api/getNounsAPI';
 import addNounAPI from '../api/addNounAPI';
 import isNounInDictionaryAPI from '../api/isNounInDictionaryAPI';
-
 import useFiniteStateMachine from '../hooks/useFiniteStateMachine';
 
 const mockupDictionary = [
@@ -19,17 +18,20 @@ const mockupDictionary = [
 export const DictionaryContext = React.createContext({
   addData: () => {},
   getData: () => {},
+  setLocalStorage: () => {},
   currentState: '',
 });
 
 export const DictionaryProvider = ({ children }) => {
-  const [localDictionary, setLocalDictionary] = useState(mockupDictionary);
+  const [localDictionary, setLocalDictionary] = useState();
   const [currentState, updateState] = useFiniteStateMachine();
+
+  console.log('rerender dictionary provider');
 
   const getData = () => {
     updateState('FETCH_DATA'); // isLoading
     console.log('get word');
-    console.log(getNounAPI());
+    return getNounsAPI();
   };
 
   const addData = (props) => {
@@ -44,8 +46,26 @@ export const DictionaryProvider = ({ children }) => {
     });
   };
 
+  const setLocalStorage = () => {
+    if (!window.localStorage.getItem('german_articles_dict'))
+      getData().then((response) => {
+        window.localStorage.setItem(
+          'german_articles_dict',
+          JSON.stringify(response)
+        );
+        return setLocalDictionary(
+          JSON.parse(window.localStorage.getItem('german_articles_dict'))
+        );
+      });
+    return setLocalDictionary(
+      JSON.parse(window.localStorage.getItem('german_articles_dict'))
+    );
+  };
+
   return (
-    <DictionaryContext.Provider value={{ addData, getData, currentState }}>
+    <DictionaryContext.Provider
+      value={{ addData, getData, setLocalStorage, currentState }}
+    >
       {children}
     </DictionaryContext.Provider>
   );
