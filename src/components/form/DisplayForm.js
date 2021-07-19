@@ -4,7 +4,7 @@ import StyledButton from '../reusables/Button';
 import { DictionaryContext } from '../../providers/DictionaryProvider';
 import FormField from './form_field/FormField';
 
-const AddWordForm = styled.form`
+const DisplayFormStyled = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,7 +17,7 @@ const initialRef = {
   nounPL: '',
 };
 
-const AddWordToDB = () => {
+const DisplayForm = () => {
   const ctx = useContext(DictionaryContext);
   const currentState = ctx.currentState;
   const inputRef = useRef(initialRef);
@@ -39,7 +39,7 @@ const AddWordToDB = () => {
   };
 
   return (
-    <AddWordForm onSubmit={saveWord} ref={formRef}>
+    <DisplayFormStyled onSubmit={saveWord} ref={formRef}>
       <p>{currentState}</p>
       <FormField
         label="Your word"
@@ -67,8 +67,8 @@ const AddWordToDB = () => {
         placeholder="ex. gest"
       ></FormField>
       <StyledButton type="submit">Add</StyledButton>
-    </AddWordForm>
+    </DisplayFormStyled>
   );
 };
 
-export default AddWordToDB;
+export default DisplayForm;

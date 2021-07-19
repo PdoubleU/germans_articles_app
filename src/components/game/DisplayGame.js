@@ -3,25 +3,25 @@ import styled from 'styled-components';
 import { DictionaryContext } from '../../providers/DictionaryProvider';
 import StyledButton from '../reusables/Button';
 
-const DisplayDictionary = () => {
+const DisplayGame = () => {
   const ctx = useContext(DictionaryContext);
 
   useEffect(() => {
     ctx.setLocalStorage();
   }, []);
 
-  const getDictionary = (e) => {
+  const getNouns = (e) => {
     e.preventDefault();
     ctx.getData();
   };
 
   return (
     <>
-      <StyledButton type="button" onClick={getDictionary}>
-        Load your dictionary
+      <StyledButton type="button" onClick={getNouns}>
+        Play game
       </StyledButton>
     </>
   );
 };
 
-export default DisplayDictionary;
+export default DisplayGame;

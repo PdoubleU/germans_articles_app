@@ -1,17 +1,17 @@
 import { fireEvent, screen } from '@testing-library/react';
-import AddWordToDB from '../components/form/AddWordToDB';
+import DisplayForm from '../components/form/DisplayForm';
 import renderThemeProvider from '../helpers/renderThemeProvider';
 
 describe('Form field', () => {
   it('Render the component', () => {
-    renderThemeProvider(<AddWordToDB />);
+    renderThemeProvider(<DisplayForm />);
     screen.getByText('Your word');
     screen.getByText('Article');
     screen.getByText('Meaning');
     screen.getByText('Add');
   });
   it('Handles value change', () => {
-    renderThemeProvider(<AddWordToDB />);
+    renderThemeProvider(<DisplayForm />);
     const inputWord = screen.getByPlaceholderText('ex. Geste, -n');
     const inputArticle = screen.getByPlaceholderText('ex. die');
     const inputTranslation = screen.getByPlaceholderText('ex. gest');
