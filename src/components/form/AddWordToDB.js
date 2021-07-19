@@ -19,6 +19,7 @@ const initialRef = {
 
 const AddWordToDB = () => {
   const ctx = useContext(DictionaryContext);
+  const currentState = ctx.currentState;
   const inputRef = useRef(initialRef);
   const formRef = useRef(null);
   const focusRef = useRef(null);
@@ -39,6 +40,7 @@ const AddWordToDB = () => {
 
   return (
     <AddWordForm onSubmit={saveWord} ref={formRef}>
+      <p>{currentState}</p>
       <FormField
         label="Your word"
         name="nounDE"
