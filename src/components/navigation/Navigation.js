@@ -12,9 +12,7 @@ const Navbar = ({ className }) => {
     <nav className={className}>
       <Link to="/">Home</Link>
       {!cxt.loading && cxt.isLogged ? (
-        <StyledButton onClick={cxt.logOut} props="xs">
-          Log out
-        </StyledButton>
+        <StyledButton onClick={cxt.logOut}>Log out</StyledButton>
       ) : null}
     </nav>
   );
@@ -25,7 +23,6 @@ const StyledNavbar = styled(Navbar)`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  background-color: blue;
   height: auto;
   width: 100vw;
   padding: 1rem;

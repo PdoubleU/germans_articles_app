@@ -13,12 +13,13 @@ import {
 
 const AuthView = () => {
   const { pathname } = useLocation();
+  const rootPath = '/';
   console.log(pathname, pathname !== '/');
   console.log('rerender auth viewe');
   return (
     <DictionaryProvider>
-      <Route path="/">
-        {pathname === '/' ? (
+      <Route path={rootPath}>
+        {pathname === rootPath ? (
           <nav>
             <Link to="/add">Add word</Link>
             <Link to="/game">Play</Link>
