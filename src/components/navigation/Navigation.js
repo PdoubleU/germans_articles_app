@@ -1,18 +1,22 @@
 import styled from 'styled-components';
-import StyledLink from './Link';
 import { UsersContext } from '../../providers/UserAuthProvider';
 import { useContext } from 'react';
 import StyledButton from '../reusables/Button';
-import { BrowserRouter as Switch, Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-const Navbar = ({ className }) => {
+const Navbar = ({ className, children }) => {
   const cxt = useContext(UsersContext);
 
   return (
     <nav className={className}>
-      <Link to="/">Home</Link>
+      <Link to="/">
+        <StyledButton>Home</StyledButton>
+      </Link>
+      {children}
       {!cxt.loading && cxt.isLogged ? (
-        <StyledButton onClick={cxt.logOut}>Log out</StyledButton>
+        <StyledButton onClick={cxt.logOut} props="sm">
+          Log out
+        </StyledButton>
       ) : null}
     </nav>
   );

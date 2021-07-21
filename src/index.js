@@ -2,16 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Root from './views/Root';
 import { UserAuthProvider } from './providers/UserAuthProvider';
-import MainTemplate from './templates/MainTemplate';
+import MainWrapper from './templates/MainWrapper';
 import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.render(
   <React.StrictMode>
     <UserAuthProvider>
       <BrowserRouter>
-        <MainTemplate>
+        <MainWrapper>
           <Root />
-        </MainTemplate>
+        </MainWrapper>
       </BrowserRouter>
     </UserAuthProvider>
   </React.StrictMode>,

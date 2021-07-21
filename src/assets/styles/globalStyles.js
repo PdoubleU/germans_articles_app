@@ -26,6 +26,18 @@ export const GlobalStyles = createGlobalStyle`
             monospace;
     }
 
+    button {
+        font-size: 100%;
+        font-family: inherit;
+        border: 0;
+        padding: 0;
+    }
+
+    a, a:hover, a:focus, a:active {
+      text-decoration: none;
+      color: inherit;
+    }
+
     .auth-view {
         display: flex;
         flex-direction: column;
