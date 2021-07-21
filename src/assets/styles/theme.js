@@ -1,5 +1,8 @@
 export const theme = {
-  colors: {},
+  bg: 'white',
+  brd: 'blue',
+  main: 'black',
+  secondary: 'white',
   fontSize: {
     xs: '.6rem',
     sm: '.8rem',

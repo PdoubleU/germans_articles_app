@@ -1,11 +1,7 @@
 import styled from 'styled-components';
 
 const Link = ({ className }) => {
-  return (
-    <a className={className} href="/">
-      Home
-    </a>
-  );
+  return <a className={className}></a>;
 };
 
 const StyledLink = styled(Link)`
