@@ -10,6 +10,9 @@ export const GlobalStyles = createGlobalStyle`
     }
 
     body {
+        background: ${({ theme }) => theme.body};
+        color: ${({ theme }) => theme.text};
+        transition: all .5s linear;
         margin: 0;
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
             'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -21,6 +24,18 @@ export const GlobalStyles = createGlobalStyle`
     code {
         font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
             monospace;
+    }
+
+    button {
+        font-size: 100%;
+        font-family: inherit;
+        border: 0;
+        padding: 0;
+    }
+
+    a, a:hover, a:focus, a:active {
+      text-decoration: none;
+      color: inherit;
     }
 
     .auth-view {

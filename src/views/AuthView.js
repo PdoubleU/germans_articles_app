@@ -13,16 +13,23 @@ import {
 
 const AuthView = () => {
   const { pathname } = useLocation();
+  const rootPath = '/';
   console.log(pathname, pathname !== '/');
   console.log('rerender auth viewe');
   return (
     <DictionaryProvider>
-      <Route path="/">
-        {pathname === '/' ? (
+      <Route path={rootPath}>
+        {pathname === rootPath ? (
           <nav>
-            <Link to="/add">Add word</Link>
-            <Link to="/game">Play</Link>
-            <Link to="/dictionary">Dictionary</Link>
+            <Link to="/add">
+              <StyledButton>Add word</StyledButton>
+            </Link>
+            <Link to="/game">
+              <StyledButton>Play game</StyledButton>
+            </Link>
+            <Link to="/dictionary">
+              <StyledButton>Dictionary</StyledButton>
+            </Link>
           </nav>
         ) : null}
         <Route path="/add" component={DisplayForm} />

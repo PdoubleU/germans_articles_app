@@ -25,6 +25,7 @@ export const DictionaryContext = React.createContext({
 export const DictionaryProvider = ({ children }) => {
   const [localDictionary, setLocalDictionary] = useState();
   const [currentState, updateState] = useFiniteStateMachine();
+  const storageItemName = 'german_articles_dict';
 
   console.log('rerender dictionary provider');
 
@@ -47,18 +48,15 @@ export const DictionaryProvider = ({ children }) => {
   };
 
   const setLocalStorage = () => {
-    if (!window.localStorage.getItem('german_articles_dict'))
+    if (!window.localStorage.getItem(storageItemName))
       getData().then((response) => {
-        window.localStorage.setItem(
-          'german_articles_dict',
-          JSON.stringify(response)
-        );
+        window.localStorage.setItem(storageItemName, JSON.stringify(response));
         return setLocalDictionary(
-          JSON.parse(window.localStorage.getItem('german_articles_dict'))
+          JSON.parse(window.localStorage.getItem(storageItemName))
         );
       });
     return setLocalDictionary(
-      JSON.parse(window.localStorage.getItem('german_articles_dict'))
+      JSON.parse(window.localStorage.getItem(storageItemName))
     );
   };
 

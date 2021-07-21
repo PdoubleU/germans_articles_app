@@ -1,9 +1,9 @@
 import { render } from '@testing-library/react';
-import { theme } from '../assets/styles/theme';
+import { lightTheme } from '../assets/styles/theme';
 import { ThemeProvider } from 'styled-components';
 
 const renderThemeProvider = (children) => {
-  return render(<ThemeProvider theme={theme}>{children}</ThemeProvider>);
+  return render(<ThemeProvider theme={lightTheme}>{children}</ThemeProvider>);
 };
 
 export default renderThemeProvider;
