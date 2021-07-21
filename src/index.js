@@ -6,15 +6,18 @@ import MainTemplate from './templates/MainTemplate';
 import { GlobalStyles } from './assets/styles/globalStyles';
 import { theme } from './assets/styles/theme';
 import { ThemeProvider } from 'styled-components';
+import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <GlobalStyles />
       <UserAuthProvider>
-        <MainTemplate>
-          <Root />
-        </MainTemplate>
+        <BrowserRouter>
+          <MainTemplate>
+            <Root />
+          </MainTemplate>
+        </BrowserRouter>
       </UserAuthProvider>
     </ThemeProvider>
   </React.StrictMode>,

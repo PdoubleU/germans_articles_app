@@ -4,30 +4,31 @@ import DisplayForm from '../components/form/DisplayForm';
 import DisplayDictionary from '../components/dictionary/DisplayDictionary';
 import DisplayGame from '../components/game/DisplayGame';
 import { DictionaryProvider } from '../providers/DictionaryProvider';
+import {
+  BrowserRouter as Switch,
+  Route,
+  Link,
+  useLocation,
+} from 'react-router-dom';
 
 const AuthView = () => {
-  const [isFormOpen, setIsFormOpen] = useState(false);
-  const [isDictionaryOpen, setIsDictionaryOpen] = useState(false);
-  const [isGameOpen, setIsGameOpen] = useState(false);
-
+  const { pathname } = useLocation();
+  console.log(pathname, pathname !== '/');
   console.log('rerender auth viewe');
-
-  const openForm = () => setIsFormOpen(true);
-  const openDictionary = () => setIsDictionaryOpen(true);
-  const openGame = () => setIsGameOpen(true);
-
-  const renderContent = () => {
-    if (isFormOpen) return <DisplayForm />;
-    if (isDictionaryOpen) return <DisplayDictionary />;
-    if (isGameOpen) return <DisplayGame />;
-  };
-
   return (
     <DictionaryProvider>
-      <>{renderContent()}</>
-      <StyledButton onClick={openForm}>Add word</StyledButton>
-      <StyledButton onClick={openGame}>Play</StyledButton>
-      <StyledButton onClick={openDictionary}>Dictionary</StyledButton>
+      <Route path="/">
+        {pathname === '/' ? (
+          <nav>
+            <Link to="/add">Add word</Link>
+            <Link to="/game">Play</Link>
+            <Link to="/dictionary">Dictionary</Link>
+          </nav>
+        ) : null}
+        <Route path="/add" component={DisplayForm} />
+        <Route path="/dictionary" component={DisplayDictionary} />
+        <Route path="/game" component={DisplayGame} />
+      </Route>
     </DictionaryProvider>
   );
 };

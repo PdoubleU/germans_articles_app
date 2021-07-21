@@ -3,13 +3,14 @@ import StyledLink from './Link';
 import { UsersContext } from '../../providers/UserAuthProvider';
 import { useContext } from 'react';
 import StyledButton from '../reusables/Button';
+import { BrowserRouter as Switch, Route, Link } from 'react-router-dom';
 
 const Navbar = ({ className }) => {
   const cxt = useContext(UsersContext);
 
   return (
     <nav className={className}>
-      <StyledLink href="/" />
+      <Link to="/">Home</Link>
       {!cxt.loading && cxt.isLogged ? (
         <StyledButton onClick={cxt.logOut} props="xs">
           Log out
