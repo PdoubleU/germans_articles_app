@@ -1,5 +1,11 @@
 import { useState } from 'react';
 
+const setOfActions = {
+  FETCH_DATA: 'FETCH_DATA',
+  FETCH_DATA_SUCCESS: 'FETCH_DATA_SUCCESS',
+  FETCH_DATA_ERROR: 'FETCH_DATA_ERROR',
+};
+
 const states = {
   empty: 'empty',
   isLoading: 'loading',
@@ -38,4 +44,4 @@ function useFiniteStateMachine() {
   return [currentState, updateState];
 }
 
-export default useFiniteStateMachine;
+export { useFiniteStateMachine, setOfActions };

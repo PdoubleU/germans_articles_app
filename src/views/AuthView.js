@@ -4,17 +4,12 @@ import DisplayForm from '../components/form/DisplayForm';
 import DisplayDictionary from '../components/dictionary/DisplayDictionary';
 import DisplayGame from '../components/game/DisplayGame';
 import { DictionaryProvider } from '../providers/DictionaryProvider';
-import {
-  BrowserRouter as Switch,
-  Route,
-  Link,
-  useLocation,
-} from 'react-router-dom';
+import { Route, Link, useLocation } from 'react-router-dom';
 
 const AuthView = () => {
   const { pathname } = useLocation();
   const rootPath = '/';
-  console.log(pathname, pathname !== '/');
+
   console.log('rerender auth viewe');
   return (
     <DictionaryProvider>

@@ -17,7 +17,7 @@ const DisplayGame = () => {
 
   return (
     <>
-      <StyledButton type="button" onClick={getNouns}>
+      <StyledButton as="button" onClick={getNouns}>
         Play game
       </StyledButton>
     </>

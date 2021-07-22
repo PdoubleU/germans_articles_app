@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import getNounsAPI from '../api/getNounsAPI';
 import addNounAPI from '../api/addNounAPI';
 import isNounInDictionaryAPI from '../api/isNounInDictionaryAPI';
-import useFiniteStateMachine from '../hooks/useFiniteStateMachine';
+import {
+  useFiniteStateMachine,
+  setOfActions,
+} from '../hooks/useFiniteStateMachine';
 
 const mockupDictionary = [
   { nounDE: 'Geste, -n', article: 'die', nounPL: 'gest' },
@@ -25,24 +28,26 @@ export const DictionaryContext = React.createContext({
 export const DictionaryProvider = ({ children }) => {
   const [localDictionary, setLocalDictionary] = useState();
   const [currentState, updateState] = useFiniteStateMachine();
+
+  const { FETCH_DATA, FETCH_DATA_SUCCESS, FETCH_DATA_ERROR } = setOfActions;
   const storageItemName = 'german_articles_dict';
 
   console.log('rerender dictionary provider');
 
   const getData = () => {
-    updateState('FETCH_DATA'); // isLoading
+    updateState(FETCH_DATA); // isLoading
     console.log('get word');
     return getNounsAPI();
   };
 
   const addData = (props) => {
-    updateState('FETCH_DATA'); // isLoading
+    updateState(FETCH_DATA); // isLoading
     isNounInDictionaryAPI(props).then((response) => {
-      if (response) return updateState('FETCH_DATA_ERROR'); // isError
+      if (response) return updateState(FETCH_DATA_ERROR); // isError
       addNounAPI(props).then((response) => {
         response
-          ? updateState('FETCH_DATA_SUCCESS') // hasLoaded
-          : updateState('FETCH_DATA_ERROR'); // hasError
+          ? updateState(FETCH_DATA_SUCCESS) // hasLoaded
+          : updateState(FETCH_DATA_ERROR); // hasError
       });
     });
   };

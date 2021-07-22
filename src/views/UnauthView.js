@@ -9,7 +9,9 @@ const UnauthView = () => {
   return (
     <>
       <div>Please log in</div>
-      <StyledButton onClick={cxt.logIn}>Log in</StyledButton>
+      <StyledButton as="button" onClick={cxt.logIn}>
+        Log in
+      </StyledButton>
     </>
   );
 };

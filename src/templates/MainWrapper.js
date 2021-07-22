@@ -24,7 +24,9 @@ const MainWrapper = ({ children }) => {
       <GlobalStyles />
       <Wrapper>
         <StyledNavbar>
-          <StyledButton onClick={themeToggler}>Switch Theme</StyledButton>
+          <StyledButton as="button" onClick={themeToggler}>
+            Switch Theme
+          </StyledButton>
         </StyledNavbar>
         {children}
       </Wrapper>
