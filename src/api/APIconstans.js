@@ -4,3 +4,9 @@
 export const refDER = '304029321487450636',
   refDAS = '304029334979478028',
   refDIE = '304029355755962892';
+
+export const artSet = {
+  der: 'der',
+  die: 'die',
+  das: 'das',
+};

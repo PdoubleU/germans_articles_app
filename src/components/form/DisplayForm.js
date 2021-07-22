@@ -66,7 +66,9 @@ const DisplayForm = () => {
         onChange={handleWordChange}
         placeholder="ex. gest"
       ></FormField>
-      <StyledButton type="submit">Add</StyledButton>
+      <StyledButton as="button" type="submit">
+        Add
+      </StyledButton>
     </DisplayFormStyled>
   );
 };

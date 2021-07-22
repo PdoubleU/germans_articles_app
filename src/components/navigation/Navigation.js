@@ -9,12 +9,12 @@ const Navbar = ({ className, children }) => {
 
   return (
     <nav className={className}>
+      {children}
       <Link to="/">
         <StyledButton>Home</StyledButton>
       </Link>
-      {children}
       {!cxt.loading && cxt.isLogged ? (
-        <StyledButton onClick={cxt.logOut} props="sm">
+        <StyledButton as="button" onClick={cxt.logOut} props="sm">
           Log out
         </StyledButton>
       ) : null}

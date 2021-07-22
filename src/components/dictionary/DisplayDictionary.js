@@ -17,7 +17,7 @@ const DisplayDictionary = () => {
 
   return (
     <>
-      <StyledButton type="button" onClick={getDictionary}>
+      <StyledButton as="button" onClick={getDictionary}>
         Load your dictionary
       </StyledButton>
     </>
