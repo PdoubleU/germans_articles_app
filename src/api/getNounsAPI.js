@@ -6,7 +6,18 @@ const getNounsAPI = () =>
   client
     .query(q.Paginate(q.Match(q.Ref(endpoint)), { size: 100000 }))
     .then((response) => {
-      return response.data;
+      let parsedData = [],
+        index = 0;
+      for (let item of response.data) {
+        parsedData[index] = {
+          nounDE: item[0],
+          article: item[1],
+          nounPL: item[2],
+          id: item[3],
+        };
+        index++;
+      }
+      return parsedData;
     })
     .catch((error) => console.log('Error: ', error.message));
 
