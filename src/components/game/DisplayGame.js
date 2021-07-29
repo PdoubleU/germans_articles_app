@@ -1,24 +1,27 @@
 import React, { useContext, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { DictionaryContext } from '../../providers/DictionaryProvider';
+import { GameContext } from '../../providers/GameProvider';
 import StyledButton from '../reusables/Button';
 
 const DisplayGame = () => {
-  const ctx = useContext(DictionaryContext);
+  const dictCTX = useContext(DictionaryContext);
+  const gameCTX = useContext(GameContext);
 
   useEffect(() => {
-    ctx.setSessionStorage();
+    dictCTX.setSessionStorage();
   }, []);
 
   return (
     <>
       <ul>
-        {!ctx.localDictionary ? (
-          <p>{ctx.currentState}</p>
+        {!dictCTX.localDictionary ? (
+          <p>{dictCTX.currentState}</p>
         ) : (
-          ctx.localDictionary.map((item) => (
-            <li key={item.id}>{item.nounDE}</li>
-          ))
+          <>
+            <p>{gameCTX.displayTimer}</p>
+            <StyledButton onClick={gameCTX.startTimer}>Let's play</StyledButton>
+          </>
         )}
       </ul>
     </>
