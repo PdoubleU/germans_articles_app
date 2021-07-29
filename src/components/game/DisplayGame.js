@@ -7,7 +7,7 @@ const DisplayGame = () => {
   const ctx = useContext(DictionaryContext);
 
   useEffect(() => {
-    ctx.setsessionStorage();
+    ctx.setSessionStorage();
   }, []);
 
   return (
@@ -16,7 +16,9 @@ const DisplayGame = () => {
         {!ctx.localDictionary ? (
           <p>{ctx.currentState}</p>
         ) : (
-          ctx.localDictionary.map((item) => <li key={item.id}>{item.id}</li>)
+          ctx.localDictionary.map((item) => (
+            <li key={item.id}>{item.nounDE}</li>
+          ))
         )}
       </ul>
     </>

@@ -10,8 +10,7 @@ import {
 
 export const DictionaryContext = React.createContext({
   addData: () => {},
-  getData: () => {},
-  setsessionStorage: () => {},
+  setSessionStorage: () => {},
   localDictionary: [],
   currentState: '',
 });
@@ -39,7 +38,6 @@ export const DictionaryProvider = ({ children }) => {
 
   const setSessionStorage = () => {
     updateState(FETCH_DATA); // isLoading
-    console.log(!window.sessionStorage.getItem(storageItemName));
     if (!window.localStorage.getItem(storageItemName)) {
       getNounsAPI()
         .then((response) => {
@@ -67,7 +65,7 @@ export const DictionaryProvider = ({ children }) => {
 
   return (
     <DictionaryContext.Provider
-      value={{ addData, getData, setSessionStorage, currentState }}
+      value={{ addData, setSessionStorage, localDictionary, currentState }}
     >
       {children}
     </DictionaryContext.Provider>
