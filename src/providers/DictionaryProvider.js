@@ -8,20 +8,11 @@ import {
   setOfActions,
 } from '../hooks/useFiniteStateMachine';
 
-const mockupDictionary = [
-  { nounDE: 'Geste, -n', article: 'die', nounPL: 'gest' },
-  { nounDE: 'Wade, -n', article: 'die', nounPL: 'łydka' },
-  { nounDE: 'Atem', article: 'der', nounPL: 'oddech' },
-  { nounDE: 'Knochen', article: 'der', nounPL: 'kość' },
-  { nounDE: 'Nagel, -:', article: 'der', nounPL: 'paznokieć' },
-  { nounDE: 'Knie', article: 'das', nounPL: 'kolano' },
-  { nounDE: 'Skelett, -e', article: 'das', nounPL: 'szkielet, kościec' },
-];
-
 export const DictionaryContext = React.createContext({
   addData: () => {},
   getData: () => {},
   setsessionStorage: () => {},
+  localDictionary: [],
   currentState: '',
 });
 
@@ -33,12 +24,6 @@ export const DictionaryProvider = ({ children }) => {
   const storageItemName = 'german_articles_dict';
 
   console.log('rerender dictionary provider');
-
-  const getData = () => {
-    updateState(FETCH_DATA); // isLoading
-    console.log('get word');
-    return getNounsAPI();
-  };
 
   const addData = (props) => {
     updateState(FETCH_DATA); // isLoading
@@ -52,25 +37,37 @@ export const DictionaryProvider = ({ children }) => {
     });
   };
 
-  const setsessionStorage = () => {
-    if (!window.sessionStorage.getItem(storageItemName))
-      getData().then((response) => {
-        window.sessionStorage.setItem(
-          storageItemName,
-          JSON.stringify(response)
-        );
-        return setLocalDictionary(
-          JSON.parse(window.sessionStorage.getItem(storageItemName))
-        );
-      });
-    return setLocalDictionary(
-      JSON.parse(window.sessionStorage.getItem(storageItemName))
-    );
+  const setSessionStorage = () => {
+    updateState(FETCH_DATA); // isLoading
+    console.log(!window.sessionStorage.getItem(storageItemName));
+    if (!window.localStorage.getItem(storageItemName)) {
+      getNounsAPI()
+        .then((response) => {
+          window.sessionStorage.setItem(
+            storageItemName,
+            JSON.stringify(response)
+          );
+          updateState(FETCH_DATA_SUCCESS); // hasLoaded
+          return setLocalDictionary(
+            JSON.parse(window.sessionStorage.getItem(storageItemName))
+          );
+        })
+        .catch((e) => {
+          updateState(FETCH_DATA_ERROR); // hasError
+          console.error(e);
+          return;
+        });
+    } else {
+      updateState(FETCH_DATA_SUCCESS); // hasLoaded
+      return setLocalDictionary(
+        JSON.parse(window.sessionStorage.getItem(storageItemName))
+      );
+    }
   };
 
   return (
     <DictionaryContext.Provider
-      value={{ addData, getData, setsessionStorage, currentState }}
+      value={{ addData, getData, setSessionStorage, currentState }}
     >
       {children}
     </DictionaryContext.Provider>

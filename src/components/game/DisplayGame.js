@@ -10,16 +10,15 @@ const DisplayGame = () => {
     ctx.setsessionStorage();
   }, []);
 
-  const getNouns = (e) => {
-    e.preventDefault();
-    ctx.getData();
-  };
-
   return (
     <>
-      <StyledButton as="button" onClick={getNouns}>
-        Play game
-      </StyledButton>
+      <ul>
+        {!ctx.localDictionary ? (
+          <p>{ctx.currentState}</p>
+        ) : (
+          ctx.localDictionary.map((item) => <li key={item.id}>{item.id}</li>)
+        )}
+      </ul>
     </>
   );
 };
