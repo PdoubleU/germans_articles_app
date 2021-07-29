@@ -21,7 +21,7 @@ const mockupDictionary = [
 export const DictionaryContext = React.createContext({
   addData: () => {},
   getData: () => {},
-  setLocalStorage: () => {},
+  setsessionStorage: () => {},
   currentState: '',
 });
 
@@ -52,22 +52,25 @@ export const DictionaryProvider = ({ children }) => {
     });
   };
 
-  const setLocalStorage = () => {
-    if (!window.localStorage.getItem(storageItemName))
+  const setsessionStorage = () => {
+    if (!window.sessionStorage.getItem(storageItemName))
       getData().then((response) => {
-        window.localStorage.setItem(storageItemName, JSON.stringify(response));
+        window.sessionStorage.setItem(
+          storageItemName,
+          JSON.stringify(response)
+        );
         return setLocalDictionary(
-          JSON.parse(window.localStorage.getItem(storageItemName))
+          JSON.parse(window.sessionStorage.getItem(storageItemName))
         );
       });
     return setLocalDictionary(
-      JSON.parse(window.localStorage.getItem(storageItemName))
+      JSON.parse(window.sessionStorage.getItem(storageItemName))
     );
   };
 
   return (
     <DictionaryContext.Provider
-      value={{ addData, getData, setLocalStorage, currentState }}
+      value={{ addData, getData, setsessionStorage, currentState }}
     >
       {children}
     </DictionaryContext.Provider>
