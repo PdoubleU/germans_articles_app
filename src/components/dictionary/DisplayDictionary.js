@@ -7,7 +7,7 @@ const DisplayDictionary = () => {
   const ctx = useContext(DictionaryContext);
 
   useEffect(() => {
-    ctx.setLocalStorage();
+    ctx.setsessionStorage();
   }, []);
 
   return (

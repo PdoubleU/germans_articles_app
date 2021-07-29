@@ -7,7 +7,7 @@ const DisplayGame = () => {
   const ctx = useContext(DictionaryContext);
 
   useEffect(() => {
-    ctx.setLocalStorage();
+    ctx.setsessionStorage();
   }, []);
 
   return (

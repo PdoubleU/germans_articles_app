@@ -10,7 +10,8 @@ import {
 
 export const DictionaryContext = React.createContext({
   addData: () => {},
-  setLocalStorage: () => {},
+  getData: () => {},
+  setsessionStorage: () => {},
   localDictionary: [],
   currentState: '',
 });
@@ -36,19 +37,19 @@ export const DictionaryProvider = ({ children }) => {
     });
   };
 
-  const setLocalStorage = () => {
+  const setSessionStorage = () => {
     updateState(FETCH_DATA); // isLoading
-    console.log(!window.localStorage.getItem(storageItemName));
+    console.log(!window.sessionStorage.getItem(storageItemName));
     if (!window.localStorage.getItem(storageItemName)) {
       getNounsAPI()
         .then((response) => {
-          window.localStorage.setItem(
+          window.sessionStorage.setItem(
             storageItemName,
             JSON.stringify(response)
           );
           updateState(FETCH_DATA_SUCCESS); // hasLoaded
           return setLocalDictionary(
-            JSON.parse(window.localStorage.getItem(storageItemName))
+            JSON.parse(window.sessionStorage.getItem(storageItemName))
           );
         })
         .catch((e) => {
@@ -59,14 +60,14 @@ export const DictionaryProvider = ({ children }) => {
     } else {
       updateState(FETCH_DATA_SUCCESS); // hasLoaded
       return setLocalDictionary(
-        JSON.parse(window.localStorage.getItem(storageItemName))
+        JSON.parse(window.sessionStorage.getItem(storageItemName))
       );
     }
   };
 
   return (
     <DictionaryContext.Provider
-      value={{ addData, setLocalStorage, localDictionary, currentState }}
+      value={{ addData, getData, setSessionStorage, currentState }}
     >
       {children}
     </DictionaryContext.Provider>
