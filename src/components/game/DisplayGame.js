@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { DictionaryContext } from '../../providers/DictionaryProvider';
 import StyledButton from '../reusables/Button';
+import { refDER, refDAS, refDIE } from '../../api/APIconstans';
 
 const initialState = {
   timer: 15,
@@ -18,13 +19,19 @@ const DisplayGame = () => {
   const [words, setWords] = useState(null);
   const [wordsLength, setWordsLength] = useState(null);
   const [currentWord, setCurrentWord] = useState(null);
+  const [correctAnswers, setCorrectAnswers] = useState(0);
+  const [intervalID, setIntervalID] = useState(null);
 
-  let intervalID = null;
   let usedIndexes = [];
 
   useEffect(() => {
     dictCTX.setSessionStorage();
   }, []);
+
+  useEffect(() => {
+    if (!dictCTX.localDictionary) return;
+    loadWords();
+  }, [dictCTX]);
 
   const loadWords = () => {
     setWords(JSON.parse(JSON.stringify(dictCTX.localDictionary)));
@@ -32,19 +39,19 @@ const DisplayGame = () => {
   };
 
   const startTimer = () => {
+    let seconds = 0;
     let index = getNewCardIndex(0, wordsLength); // get new, unique index, to display a next word
     // below variable stores the value of counted seconds, it is used to restart timer
     // bcause setInterval uses its own scope, 'seconds' is helper here, to store the current counted seconds:
-    let seconds = 0;
     setCurrentWord(words[index]); // load first word in the game
 
-    intervalID = window.setInterval(() => {
+    let interval = window.setInterval(() => {
       // interval works, and checks if counted seconds are equal to timer value - true means that user has no more time and code has to restart countdown
       if (seconds === timer) {
         setTimer(initialState.timer); // restart timer
         seconds = 0;
         index = getNewCardIndex(0, wordsLength);
-        if (!index) {
+        if (!index && index !== 0) {
           // guard pattern
           clearInterval(intervalID);
           return;
@@ -53,12 +60,15 @@ const DisplayGame = () => {
       }
       setTimer((timer) => timer - 1);
       seconds += 1;
-    }, 10);
+    }, 1000);
+
+    setIntervalID(interval);
   };
 
   const startGame = () => {
     // start game runs interval in which all logic happens:
     startTimer();
+    console.log(intervalID);
   };
 
   const getNewCardIndex = (min = 0, max) => {
@@ -80,10 +90,19 @@ const DisplayGame = () => {
   };
 
   const evaluateAnswer = (answer) => {
-    console.log(answer);
+    if (answer.target.value === currentWord.article) {
+      scorePoint();
+      console.log(intervalID);
+      clearInterval(intervalID);
+      setTimer(initialState.timer);
+      startTimer();
+    }
   };
 
-  const scorePoints = () => {};
+  const scorePoint = () => {
+    console.log('POINT!');
+    setCorrectAnswers((correctAnswers) => correctAnswers + 1);
+  };
 
   return (
     <>
@@ -92,19 +111,35 @@ const DisplayGame = () => {
           <p>{dictCTX.currentState}</p>
         ) : (
           <>
-            <p>{timer}</p>
-            <StyledButton onClick={startTimer}>Let's play</StyledButton>
-            <StyledButton onClick={loadWords}>Load words</StyledButton>
             <StyledButton onClick={startGame}>Play</StyledButton>
+            <p>Time: {timer}</p>
             <div>
-              <h6>Current word</h6>
+              <p>Points: {correctAnswers}</p>
               {currentWord ? (
-                <div>
+                <form>
                   <p>{currentWord.nounDE}</p>
-                  <StyledButton onClick={evaluateAnswer}>DER</StyledButton>
-                  <StyledButton onClick={evaluateAnswer}>DIE</StyledButton>
-                  <StyledButton onClick={evaluateAnswer}>DAS</StyledButton>
-                </div>
+                  <input
+                    type="radio"
+                    name="answer"
+                    value={refDER}
+                    onChange={evaluateAnswer}
+                  />
+                  <label>DER</label>
+                  <input
+                    type="radio"
+                    name="answer"
+                    value={refDIE}
+                    onChange={evaluateAnswer}
+                  />
+                  <label>DIE</label>
+                  <input
+                    type="radio"
+                    name="answer"
+                    value={refDAS}
+                    onChange={evaluateAnswer}
+                  />
+                  <label>DAS</label>
+                </form>
               ) : (
                 <p></p>
               )}
