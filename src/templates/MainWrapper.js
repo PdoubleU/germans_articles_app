@@ -14,7 +14,7 @@ const Wrapper = styled.div`
 `;
 
 const MainWrapper = ({ children }) => {
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState('dark');
   const themeToggler = () => {
     theme === 'light' ? setTheme('dark') : setTheme('light');
   };
