@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { DictionaryContext } from '../../providers/DictionaryProvider';
 import StyledButton from '../reusables/Button';
 import { refDER, refDAS, refDIE } from '../../api/APIconstans';
+import DisplayForm from './DisplayForm';
 
 const initialState = {
   timer: 15,
@@ -22,6 +23,7 @@ const DisplayGame = () => {
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [timerID, setTimerID] = useState(null);
   const [usedIndexes, setUsedIndexes] = useState(initialState.indexes);
+  const [selectedRadio, setSelectedRadio] = useState(null);
 
   useEffect(() => {
     dictCTX.setSessionStorage();
@@ -47,7 +49,8 @@ const DisplayGame = () => {
       clearInterval(timerID);
       setTimer(initialState.timer);
       getNextWord();
-      startTimer();
+      if (wordsLength !== usedIndexes.length) startTimer();
+      setSelectedRadio(null);
       return;
     }
 
@@ -55,7 +58,8 @@ const DisplayGame = () => {
       clearInterval(timerID);
       setTimer(initialState.timer);
       getNextWord();
-      startTimer();
+      if (wordsLength !== usedIndexes.length) startTimer();
+      setSelectedRadio(null);
       return;
     }
 
@@ -65,6 +69,7 @@ const DisplayGame = () => {
       clearInterval(timerID);
       setTimer(initialState.timer);
       setCurrentWord({ nounDE: 'Your score: ' });
+      setSelectedRadio(null);
       return;
     }
 
@@ -73,6 +78,7 @@ const DisplayGame = () => {
       setTimer(initialState.timer);
       getNextWord();
       startTimer();
+      setSelectedRadio(null);
       return;
     }
   };
@@ -113,6 +119,7 @@ const DisplayGame = () => {
   };
 
   const evaluateAnswer = (answer) => {
+    setSelectedRadio(answer.target.id);
     let evaluatedAnswer = answer.target.value === currentWord.article;
     evaluateGameState(evaluatedAnswer);
   };
@@ -133,30 +140,13 @@ const DisplayGame = () => {
             <div>
               <p>Points: {correctAnswers}</p>
               {currentWord ? (
-                <form>
+                <div>
                   <p>{currentWord.nounDE}</p>
-                  <input
-                    type="radio"
-                    name="answer"
-                    value={refDER}
-                    onChange={evaluateAnswer}
+                  <DisplayForm
+                    selectHandler={evaluateAnswer}
+                    selectedRadio={selectedRadio}
                   />
-                  <label>DER</label>
-                  <input
-                    type="radio"
-                    name="answer"
-                    value={refDIE}
-                    onChange={evaluateAnswer}
-                  />
-                  <label>DIE</label>
-                  <input
-                    type="radio"
-                    name="answer"
-                    value={refDAS}
-                    onChange={evaluateAnswer}
-                  />
-                  <label>DAS</label>
-                </form>
+                </div>
               ) : (
                 <p></p>
               )}
