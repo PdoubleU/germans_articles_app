@@ -9,7 +9,7 @@ const initialState = {
   correctAnswers: 0,
   wrongAnswers: 0,
   cardsDisplayed: 0,
-  startTimer: () => {},
+  indexes: [],
 };
 
 const DisplayGame = () => {
@@ -20,9 +20,8 @@ const DisplayGame = () => {
   const [wordsLength, setWordsLength] = useState(null);
   const [currentWord, setCurrentWord] = useState(null);
   const [correctAnswers, setCorrectAnswers] = useState(0);
-  const [intervalID, setIntervalID] = useState(null);
-
-  let usedIndexes = [];
+  const [timerID, setTimerID] = useState(null);
+  const [usedIndexes, setUsedIndexes] = useState(initialState.indexes);
 
   useEffect(() => {
     dictCTX.setSessionStorage();
@@ -33,74 +32,92 @@ const DisplayGame = () => {
     loadWords();
   }, [dictCTX]);
 
+  useEffect(() => {
+    evaluateGameState();
+  }, [timer]);
+
+  const initiateGame = () => {
+    getNextWord();
+    startTimer();
+  };
+
+  const evaluateGameState = (evaluatedAnswer) => {
+    if (evaluatedAnswer !== undefined && evaluatedAnswer) {
+      scorePoint();
+      clearInterval(timerID);
+      setTimer(initialState.timer);
+      getNextWord();
+      startTimer();
+      return;
+    }
+
+    if (evaluatedAnswer !== undefined && !evaluatedAnswer) {
+      clearInterval(timerID);
+      setTimer(initialState.timer);
+      getNextWord();
+      startTimer();
+      return;
+    }
+
+    if (timer > 0) return;
+
+    if (timer === 0 && wordsLength === usedIndexes.length) {
+      clearInterval(timerID);
+      setTimer(initialState.timer);
+      setCurrentWord({ nounDE: 'Your score: ' });
+      return;
+    }
+
+    if (timer === 0) {
+      clearInterval(timerID);
+      setTimer(initialState.timer);
+      getNextWord();
+      startTimer();
+      return;
+    }
+  };
+
   const loadWords = () => {
     setWords(JSON.parse(JSON.stringify(dictCTX.localDictionary)));
     setWordsLength(dictCTX.localDictionary.length);
   };
 
   const startTimer = () => {
-    let seconds = 0;
-    let index = getNewCardIndex(0, wordsLength); // get new, unique index, to display a next word
-    // below variable stores the value of counted seconds, it is used to restart timer
-    // bcause setInterval uses its own scope, 'seconds' is helper here, to store the current counted seconds:
-    setCurrentWord(words[index]); // load first word in the game
-
     let interval = window.setInterval(() => {
-      // interval works, and checks if counted seconds are equal to timer value - true means that user has no more time and code has to restart countdown
-      if (seconds === timer) {
-        setTimer(initialState.timer); // restart timer
-        seconds = 0;
-        index = getNewCardIndex(0, wordsLength);
-        if (!index && index !== 0) {
-          // guard pattern
-          clearInterval(intervalID);
-          return;
-        }
-        setCurrentWord(words[index]);
-      }
       setTimer((timer) => timer - 1);
-      seconds += 1;
     }, 1000);
-
-    setIntervalID(interval);
+    return setTimerID(interval);
   };
 
-  const startGame = () => {
-    // start game runs interval in which all logic happens:
-    startTimer();
-    console.log(intervalID);
+  const getNextWord = () => {
+    let index = getNewIndex(0, wordsLength);
+    setCurrentWord(words[index]);
   };
 
-  const getNewCardIndex = (min = 0, max) => {
+  const getNewIndex = (min = 0, max) => {
     min = Math.ceil(min);
     max = Math.floor(max);
     if (usedIndexes.length >= wordsLength) {
       return; // guard pattern, can be merged later with other guard pattern for index
     }
     let randomIndex = () => {
-      let randomNumebr = () => Math.floor(Math.random() * (max - min)) + min;
-      let index = randomNumebr();
+      let randomNumber = () => Math.floor(Math.random() * (max - min)) + min;
+      let index = randomNumber();
       if (usedIndexes.length && usedIndexes.some((elem) => elem === index)) {
         return randomIndex();
       }
-      usedIndexes.push(index);
+      setUsedIndexes((usedIndexes) => usedIndexes.concat(index));
       return index;
     };
     return randomIndex();
   };
 
   const evaluateAnswer = (answer) => {
-    if (answer.target.value === currentWord.article) {
-      scorePoint();
-      console.log(intervalID);
-      clearInterval(intervalID);
-      setTimer(initialState.timer);
-      startTimer();
-    }
+    let evaluatedAnswer = answer.target.value === currentWord.article;
+    evaluateGameState(evaluatedAnswer);
   };
 
   const scorePoint = () => {
-    console.log('POINT!');
     setCorrectAnswers((correctAnswers) => correctAnswers + 1);
   };
 
@@ -111,7 +128,7 @@ const DisplayGame = () => {
           <p>{dictCTX.currentState}</p>
         ) : (
           <>
-            <StyledButton onClick={startGame}>Play</StyledButton>
+            <StyledButton onClick={initiateGame}>Play</StyledButton>
             <p>Time: {timer}</p>
             <div>
               <p>Points: {correctAnswers}</p>
