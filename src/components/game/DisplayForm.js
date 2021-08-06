@@ -7,11 +7,13 @@ import { refDER, refDAS, refDIE } from '../../api/APIconstans';
 const DisplayFormStyled = styled.form`
   display: flex;
   flex-direction: row;
-  align-items: center;
-  justify-content: center;
+  justify-content: left;
+  margin-top: 2rem;
+  font-size: 1.2rem;
 `;
 
-const DisplayForm = ({ selectHandler, selectedRadio }) => {
+const DisplayForm = ({ selectHandler, selectedRadio, isAnswerCorrect }) => {
+  console.log(selectedRadio, isAnswerCorrect);
   return (
     <DisplayFormStyled>
       <FormField
@@ -22,6 +24,7 @@ const DisplayForm = ({ selectHandler, selectedRadio }) => {
         value={refDER}
         onChange={selectHandler}
         selectedRadio={selectedRadio}
+        isAnswerCorrect={isAnswerCorrect}
       ></FormField>
       <FormField
         type="radio"
@@ -31,6 +34,7 @@ const DisplayForm = ({ selectHandler, selectedRadio }) => {
         value={refDIE}
         onChange={selectHandler}
         selectedRadio={selectedRadio}
+        isAnswerCorrect={isAnswerCorrect}
       ></FormField>
       <FormField
         type="radio"
@@ -40,6 +44,7 @@ const DisplayForm = ({ selectHandler, selectedRadio }) => {
         value={refDAS}
         onChange={selectHandler}
         selectedRadio={selectedRadio}
+        isAnswerCorrect={isAnswerCorrect}
       ></FormField>
     </DisplayFormStyled>
   );

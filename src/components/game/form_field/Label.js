@@ -5,9 +5,14 @@ export const Label = styled.label`
   padding: 0.2rem 1.2rem;
   background-color: ${({ props, theme }) => theme[props]};
   &:hover,
-  &:active,
-  &:focus {
+  &:active {
     color: ${({ theme }) => theme.textHover};
     background: ${({ theme }) => theme.backgroundHover};
+  }
+  &.positive {
+    background: green;
+  }
+  &.negative {
+    background: red;
   }
 `;

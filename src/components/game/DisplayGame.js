@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
+import React, { useContext, useEffect, useState } from 'react';
 import { DictionaryContext } from '../../providers/DictionaryProvider';
 import StyledButton from '../reusables/Button';
-import { refDER, refDAS, refDIE } from '../../api/APIconstans';
-import DisplayForm from './DisplayForm';
+import StyledScorePanel from './score_panel/ScorePanel';
+import QuestionModule from './word_module/WordModule';
 
 const initialState = {
   timer: 15,
@@ -21,9 +20,11 @@ const DisplayGame = () => {
   const [wordsLength, setWordsLength] = useState(null);
   const [currentWord, setCurrentWord] = useState(null);
   const [correctAnswers, setCorrectAnswers] = useState(0);
+  const [isAnswerCorrect, setIsAnswerCorrect] = useState(null);
   const [timerID, setTimerID] = useState(null);
   const [usedIndexes, setUsedIndexes] = useState(initialState.indexes);
   const [selectedRadio, setSelectedRadio] = useState(null);
+  const [isPlayDisabled, setIsPlayDisabled] = useState(false);
 
   useEffect(() => {
     dictCTX.setSessionStorage();
@@ -39,28 +40,37 @@ const DisplayGame = () => {
   }, [timer]);
 
   const initiateGame = () => {
+    setIsPlayDisabled(true);
     getNextWord();
     startTimer();
   };
 
   const evaluateGameState = (evaluatedAnswer) => {
     if (evaluatedAnswer !== undefined && evaluatedAnswer) {
-      scorePoint();
-      clearInterval(timerID);
-      setTimer(initialState.timer);
-      getNextWord();
-      if (wordsLength !== usedIndexes.length) startTimer();
-      setSelectedRadio(null);
-      return;
+      setIsAnswerCorrect(true);
+      window.setTimeout(() => {
+        scorePoint();
+        clearInterval(timerID);
+        setTimer(initialState.timer);
+        getNextWord();
+        if (wordsLength !== usedIndexes.length) startTimer();
+        setSelectedRadio(null);
+        setIsAnswerCorrect(null);
+        return;
+      }, 2000);
     }
 
     if (evaluatedAnswer !== undefined && !evaluatedAnswer) {
-      clearInterval(timerID);
-      setTimer(initialState.timer);
-      getNextWord();
-      if (wordsLength !== usedIndexes.length) startTimer();
-      setSelectedRadio(null);
-      return;
+      setIsAnswerCorrect(false);
+      window.setTimeout(() => {
+        clearInterval(timerID);
+        setTimer(initialState.timer);
+        getNextWord();
+        if (wordsLength !== usedIndexes.length) startTimer();
+        setSelectedRadio(null);
+        setIsAnswerCorrect(null);
+        return;
+      }, 2000);
     }
 
     if (timer > 0) return;
@@ -70,6 +80,7 @@ const DisplayGame = () => {
       setTimer(initialState.timer);
       setCurrentWord({ nounDE: 'Your score: ' });
       setSelectedRadio(null);
+      setIsPlayDisabled(false);
       return;
     }
 
@@ -130,30 +141,33 @@ const DisplayGame = () => {
 
   return (
     <>
-      <ul>
+      <span>
         {!dictCTX.localDictionary ? (
           <p>{dictCTX.currentState}</p>
         ) : (
           <>
-            <StyledButton onClick={initiateGame}>Play</StyledButton>
-            <p>Time: {timer}</p>
-            <div>
-              <p>Points: {correctAnswers}</p>
-              {currentWord ? (
-                <div>
-                  <p>{currentWord.nounDE}</p>
-                  <DisplayForm
-                    selectHandler={evaluateAnswer}
-                    selectedRadio={selectedRadio}
-                  />
-                </div>
-              ) : (
-                <p></p>
-              )}
-            </div>
+            <StyledScorePanel
+              points={correctAnswers}
+              timer={timer}
+            ></StyledScorePanel>
+            {currentWord ? (
+              <QuestionModule
+                selectHandler={evaluateAnswer}
+                selectedRadio={selectedRadio}
+                isAnswerCorrect={isAnswerCorrect}
+                noun={currentWord.nounDE}
+              />
+            ) : (
+              <div></div>
+            )}
+            {!isPlayDisabled ? (
+              <StyledButton onClick={initiateGame}>Play</StyledButton>
+            ) : (
+              <div></div>
+            )}
           </>
         )}
-      </ul>
+      </span>
     </>
   );
 };
