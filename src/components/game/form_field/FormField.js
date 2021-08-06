@@ -14,12 +14,24 @@ const FormField = React.forwardRef(
       value,
       placeholder,
       selectedRadio,
+      isAnswerCorrect,
     },
     ref
   ) => {
     return (
       <>
-        <Label htmlFor={id}>{label}</Label>
+        <Label
+          htmlFor={id}
+          className={
+            selectedRadio === id
+              ? isAnswerCorrect
+                ? 'positive'
+                : 'negative'
+              : null
+          }
+        >
+          {label}
+        </Label>
         <Input
           ref={ref}
           name={name}
