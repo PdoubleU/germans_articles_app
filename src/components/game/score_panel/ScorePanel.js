@@ -11,11 +11,11 @@ const StyledScorePanel = styled.div`
   margin-bottom: 2rem;
 `;
 
-const ScorePanel = ({ points, timer }) => {
+const ScorePanel = ({ points, accuracy }) => {
   return (
     <StyledScorePanel>
       <p>Points: {points}</p>
-      <p>Time: {timer}</p>
+      <p>Accuracy: {accuracy} %</p>
     </StyledScorePanel>
   );
 };

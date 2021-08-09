@@ -2,29 +2,30 @@ import React, { useContext, useEffect, useState } from 'react';
 import { DictionaryContext } from '../../providers/DictionaryProvider';
 import StyledButton from '../reusables/Button';
 import StyledScorePanel from './score_panel/ScorePanel';
-import QuestionModule from './word_module/WordModule';
+import QuestionModule from './word_module/QuestionModule';
+import { refDER, refDAS, refDIE } from '../../api/APIconstans';
+import { der, die, das } from '../constans/answerIDs';
 
 const initialState = {
-  timer: 15,
   correctAnswers: 0,
   wrongAnswers: 0,
   cardsDisplayed: 0,
   indexes: [],
+  accuracy: 0,
 };
 
 const DisplayGame = () => {
   const dictCTX = useContext(DictionaryContext);
 
-  const [timer, setTimer] = useState(initialState.timer);
   const [words, setWords] = useState(null);
   const [wordsLength, setWordsLength] = useState(null);
   const [currentWord, setCurrentWord] = useState(null);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [isAnswerCorrect, setIsAnswerCorrect] = useState(null);
-  const [timerID, setTimerID] = useState(null);
   const [usedIndexes, setUsedIndexes] = useState(initialState.indexes);
   const [selectedRadio, setSelectedRadio] = useState(null);
   const [isPlayDisabled, setIsPlayDisabled] = useState(false);
+  const [accuracy, setAccuracy] = useState(initialState.accuracy);
 
   useEffect(() => {
     dictCTX.setSessionStorage();
@@ -36,13 +37,12 @@ const DisplayGame = () => {
   }, [dictCTX]);
 
   useEffect(() => {
-    evaluateGameState();
-  }, [timer]);
+    setAccuracy(Math.round((correctAnswers * 100) / usedIndexes.length || 0.1));
+  }, [correctAnswers, usedIndexes]);
 
   const initiateGame = () => {
     setIsPlayDisabled(true);
     getNextWord();
-    startTimer();
   };
 
   const evaluateGameState = (evaluatedAnswer) => {
@@ -50,10 +50,7 @@ const DisplayGame = () => {
       setIsAnswerCorrect(true);
       window.setTimeout(() => {
         scorePoint();
-        clearInterval(timerID);
-        setTimer(initialState.timer);
         getNextWord();
-        if (wordsLength !== usedIndexes.length) startTimer();
         setSelectedRadio(null);
         setIsAnswerCorrect(null);
         return;
@@ -61,35 +58,34 @@ const DisplayGame = () => {
     }
 
     if (evaluatedAnswer !== undefined && !evaluatedAnswer) {
+      if (currentWord.article === refDAS) {
+        const elem = document.querySelector(`label[for=${das}]`);
+        elem.classList.add('positive');
+        window.setTimeout(() => elem.classList.remove('positive'), 2000);
+      }
+      if (currentWord.article === refDER) {
+        const elem = document.querySelector(`label[for=${der}]`);
+        elem.classList.add('positive');
+        window.setTimeout(() => elem.classList.remove('positive'), 2000);
+      }
+      if (currentWord.article === refDIE) {
+        const elem = document.querySelector(`label[for=${die}]`);
+        elem.classList.add('positive');
+        window.setTimeout(() => elem.classList.remove('positive'), 2000);
+      }
       setIsAnswerCorrect(false);
       window.setTimeout(() => {
-        clearInterval(timerID);
-        setTimer(initialState.timer);
         getNextWord();
-        if (wordsLength !== usedIndexes.length) startTimer();
         setSelectedRadio(null);
         setIsAnswerCorrect(null);
         return;
       }, 2000);
     }
 
-    if (timer > 0) return;
-
-    if (timer === 0 && wordsLength === usedIndexes.length) {
-      clearInterval(timerID);
-      setTimer(initialState.timer);
-      setCurrentWord({ nounDE: 'Your score: ' });
+    if (wordsLength === usedIndexes.length) {
+      setCurrentWord({ nounDE: 'GAME OVER' });
       setSelectedRadio(null);
       setIsPlayDisabled(false);
-      return;
-    }
-
-    if (timer === 0) {
-      clearInterval(timerID);
-      setTimer(initialState.timer);
-      getNextWord();
-      startTimer();
-      setSelectedRadio(null);
       return;
     }
   };
@@ -97,13 +93,6 @@ const DisplayGame = () => {
   const loadWords = () => {
     setWords(JSON.parse(JSON.stringify(dictCTX.localDictionary)));
     setWordsLength(dictCTX.localDictionary.length);
-  };
-
-  const startTimer = () => {
-    let interval = window.setInterval(() => {
-      setTimer((timer) => timer - 1);
-    }, 1000);
-    return setTimerID(interval);
   };
 
   const getNextWord = () => {
@@ -141,14 +130,14 @@ const DisplayGame = () => {
 
   return (
     <>
-      <span>
+      <span className="container">
         {!dictCTX.localDictionary ? (
           <p>{dictCTX.currentState}</p>
         ) : (
           <>
             <StyledScorePanel
               points={correctAnswers}
-              timer={timer}
+              accuracy={accuracy}
             ></StyledScorePanel>
             {currentWord ? (
               <QuestionModule

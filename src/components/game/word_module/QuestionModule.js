@@ -1,14 +1,22 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { DictionaryContext } from '../../../providers/DictionaryProvider';
-import { refDER, refDAS, refDIE } from '../../../api/APIconstans';
-import DisplayForm from '../DisplayForm';
+import DisplayForm from './DisplayForm';
 
 const StyledQuestionModule = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  & > h2 {
+    width: 100%;
+  }
+  & > h2.positive {
+    color: green;
+  }
+  & > h2.negative {
+    color: red;
+  }
 `;
 
 const QuestionModule = ({
@@ -19,7 +27,13 @@ const QuestionModule = ({
 }) => {
   return (
     <StyledQuestionModule>
-      <h2>{noun}</h2>
+      <h2
+        className={
+          selectedRadio ? (isAnswerCorrect ? 'positive' : 'negative') : null
+        }
+      >
+        {noun}
+      </h2>
       <DisplayForm
         selectHandler={selectHandler}
         selectedRadio={selectedRadio}
