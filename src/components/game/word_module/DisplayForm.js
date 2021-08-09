@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import StyledButton from '../reusables/Button';
-import FormField from './form_field/FormField';
-import { refDER, refDAS, refDIE } from '../../api/APIconstans';
+import FormField from '../form_field/FormField';
+import { refDER, refDAS, refDIE } from '../../../api/APIconstans';
+import { der, die, das } from '../../constans/answerIDs';
 
 const DisplayFormStyled = styled.form`
   display: flex;
@@ -13,14 +13,13 @@ const DisplayFormStyled = styled.form`
 `;
 
 const DisplayForm = ({ selectHandler, selectedRadio, isAnswerCorrect }) => {
-  console.log(selectedRadio, isAnswerCorrect);
   return (
     <DisplayFormStyled>
       <FormField
         type="radio"
         label="DER"
         name="answer"
-        id="answer_der"
+        id={der}
         value={refDER}
         onChange={selectHandler}
         selectedRadio={selectedRadio}
@@ -30,7 +29,7 @@ const DisplayForm = ({ selectHandler, selectedRadio, isAnswerCorrect }) => {
         type="radio"
         label="DIE"
         name="answer"
-        id="answer_die"
+        id={die}
         value={refDIE}
         onChange={selectHandler}
         selectedRadio={selectedRadio}
@@ -40,7 +39,7 @@ const DisplayForm = ({ selectHandler, selectedRadio, isAnswerCorrect }) => {
         type="radio"
         label="DAS"
         name="answer"
-        id="answer_das"
+        id={das}
         value={refDAS}
         onChange={selectHandler}
         selectedRadio={selectedRadio}
