@@ -10,7 +10,6 @@ const AuthView = () => {
   const { pathname } = useLocation();
   const rootPath = '/';
 
-  console.log('rerender auth viewe');
   return (
     <DictionaryProvider>
       <Route path={rootPath}>
