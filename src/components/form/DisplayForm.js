@@ -40,7 +40,6 @@ const DisplayForm = () => {
 
   return (
     <DisplayFormStyled onSubmit={saveWord} ref={formRef}>
-      <p>{currentState}</p>
       <FormField
         label="Your word"
         name="nounDE"

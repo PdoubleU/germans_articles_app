@@ -44,6 +44,11 @@ export const GlobalStyles = createGlobalStyle`
     }
 
     span.container {
-    width: 80vw;
-  }
+        width: 80vw;
+    }
+
+    .dictionary_container {
+        list-style: none;
+        padding: 5rem 0 0;
+    }
 `;

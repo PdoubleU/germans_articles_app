@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useRef } from 'react';
-import styled from 'styled-components';
 import { DictionaryContext } from '../../providers/DictionaryProvider';
-import StyledButton from '../reusables/Button';
+import WordCard from './word_card/word_card.js';
 
 const DisplayDictionary = () => {
   const ctx = useContext(DictionaryContext);
@@ -11,17 +10,15 @@ const DisplayDictionary = () => {
   }, []);
 
   return (
-    <>
-      <ul>
-        {!ctx.localDictionary ? (
-          <p>{ctx.currentState}</p>
-        ) : (
-          ctx.localDictionary.map((item) => (
-            <li key={item.id}>{item.nounDE}</li>
-          ))
-        )}
-      </ul>
-    </>
+    <ul className="dictionary_container">
+      {!ctx.localDictionary ? (
+        <p>{ctx.currentState}</p>
+      ) : (
+        ctx.localDictionary.map((item) => (
+          <WordCard item={item} key={item.id} />
+        ))
+      )}
+    </ul>
   );
 };
 

@@ -22,8 +22,6 @@ export const DictionaryProvider = ({ children }) => {
   const { FETCH_DATA, FETCH_DATA_SUCCESS, FETCH_DATA_ERROR } = setOfActions;
   const storageItemName = 'german_articles_dict';
 
-  console.log('rerender dictionary provider');
-
   const addData = (props) => {
     updateState(FETCH_DATA); // isLoading
     isNounInDictionaryAPI(props).then((response) => {
