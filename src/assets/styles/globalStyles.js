@@ -47,8 +47,26 @@ export const GlobalStyles = createGlobalStyle`
         width: 80vw;
     }
 
+    .dictionary_module {
+        display: flex;
+        flex-direction: column;
+    }
+
     .dictionary_container {
         list-style: none;
         padding: 5rem 0 0;
     }
+
+    .pagination {
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: auto;
+        grid-template-rows: 1fr;
+        list-style: none;
+    }
+
+    .pagination > li {
+        cursor: pointer;
+    }
+
 `;
