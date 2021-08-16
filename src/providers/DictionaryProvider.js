@@ -13,10 +13,13 @@ export const DictionaryContext = React.createContext({
   setSessionStorage: () => {},
   localDictionary: [],
   currentState: '',
+  filterList: () => {},
+  resetDictionary: () => {},
 });
 
 export const DictionaryProvider = ({ children }) => {
   const [localDictionary, setLocalDictionary] = useState();
+  const [filteredList, setFilteredList] = useState();
   const [currentState, updateState] = useFiniteStateMachine();
 
   const { FETCH_DATA, FETCH_DATA_SUCCESS, FETCH_DATA_ERROR } = setOfActions;
@@ -61,9 +64,40 @@ export const DictionaryProvider = ({ children }) => {
     }
   };
 
+  const filterList = (input) => {
+    if (!localDictionary) {
+      throw Error(
+        "No local data is set or couldn't reach out a remote database"
+      );
+    }
+    const filteredCopy = JSON.parse(
+      window.sessionStorage.getItem(storageItemName)
+    ).filter((item) => {
+      return (
+        item.nounDE.toLowerCase().includes(input.toLowerCase()) ||
+        item.nounPL.includes(input.toLowerCase())
+      );
+    });
+    setLocalDictionary(filteredCopy);
+  };
+
+  const resetDictionary = () => {
+    //reset dictionary to default list when clear search bar input
+    setLocalDictionary(
+      JSON.parse(window.sessionStorage.getItem(storageItemName))
+    );
+  };
+
   return (
     <DictionaryContext.Provider
-      value={{ addData, setSessionStorage, localDictionary, currentState }}
+      value={{
+        addData,
+        setSessionStorage,
+        localDictionary,
+        currentState,
+        filterList,
+        resetDictionary,
+      }}
     >
       {children}
     </DictionaryContext.Provider>
