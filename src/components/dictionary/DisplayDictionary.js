@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { DictionaryContext } from '../../providers/DictionaryProvider';
 import WordCard from './word_card/word_card.js';
 import ReactPaginate from 'react-paginate';
+import SearchBar from './search_bar/search_bar';
 
 const DisplayDictionary = () => {
   const ctx = useContext(DictionaryContext);
@@ -38,6 +39,7 @@ const DisplayDictionary = () => {
 
   return (
     <span className="dictionary_module">
+      <SearchBar />
       <ul className="dictionary_container">
         {!ctx.localDictionary ? (
           <p>{ctx.currentState}</p>

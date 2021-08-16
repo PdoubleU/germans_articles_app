@@ -48,13 +48,22 @@ export const GlobalStyles = createGlobalStyle`
     }
 
     .dictionary_module {
+        z-index: 0;
         display: flex;
+        position: relative;
         flex-direction: column;
+        padding-top: 5rem;
     }
 
     .dictionary_container {
         list-style: none;
-        padding: 5rem 0 0;
+        padding: 1rem 0 0;
+    }
+
+    .search_bar {
+        position: fixed;
+        top: 6rem;
+        left: 1rem;
     }
 
     .pagination {

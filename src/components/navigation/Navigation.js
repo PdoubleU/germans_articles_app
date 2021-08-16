@@ -34,6 +34,7 @@ const StyledNavbar = styled(Navbar)`
   top: 0;
   left: 0;
   right: 0;
+  z-index: 100;
 `;
 
 export default StyledNavbar;
