@@ -41,6 +41,7 @@ const FormField = React.forwardRef(
           value={value}
           placeholder={placeholder}
           checked={selectedRadio === id}
+          visibility="none"
         ></Input>
       </>
     );

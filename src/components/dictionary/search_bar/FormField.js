@@ -16,6 +16,7 @@ const FormField = React.forwardRef(
           onChange={onChange}
           value={value}
           placeholder={placeholder}
+          props="body"
         ></Input>
       </>
     );

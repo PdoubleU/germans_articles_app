@@ -19,7 +19,6 @@ const initialRef = {
 
 const DisplayForm = () => {
   const ctx = useContext(DictionaryContext);
-  const currentState = ctx.currentState;
   const inputRef = useRef(initialRef);
   const formRef = useRef(null);
   const focusRef = useRef(null);
