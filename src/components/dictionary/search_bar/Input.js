@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
 export const Input = styled.input`
-  border: 1px solid red;
+  visibility: ${({ visibility, theme }) => theme[visibility]};
+  border: 1px solid ${({ props, theme }) => theme[props]};
 `;

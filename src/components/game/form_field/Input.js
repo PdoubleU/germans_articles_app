@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Input = styled.input`
-  visibility: hidden;
+  visibility: ${({ visibility, theme }) => theme.visibility[visibility]};
   margin: 0;
   padding: 0;
   width: 0;
