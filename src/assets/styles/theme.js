@@ -17,19 +17,42 @@ const visibility = {
   visible: 'visible',
 };
 
+const colors = {
+  body: '#FFF',
+  bodyDark: '#363537',
+  text: '#363537',
+  textDark: '#FAFAFA',
+  background: '#6B8096',
+  toggleBorder: '#FFF',
+};
+
+const size = {
+  auto: 'auto',
+  max: '100%',
+  none: '0',
+};
+
 export const lightTheme = {
   visibility: {
     none: visibility.none,
     visible: visibility.visible,
   },
-  body: '#FFF',
-  text: '#363537',
-  wordCardText: '#FAFAFA',
-  toggleBorder: '#FFF',
-  background: '#363537',
-  wordCardBackground: '#363537',
-  backgroundHover: '#363537',
-  textHover: '#FFF',
+  width: {
+    auto: size.auto,
+    none: size.none,
+  },
+  height: {
+    auto: size.auto,
+    none: size.none,
+  },
+  body: colors.body,
+  text: colors.text,
+  wordCardText: colors.textDark,
+  toggleBorder: colors.body,
+  background: colors.bodyDark,
+  wordCardBackground: colors.bodyDark,
+  backgroundHover: colors.textDark,
+  textHover: colors.body,
   fontSize: {
     xs: font.xs,
     sm: font.sm,
@@ -49,14 +72,22 @@ export const darkTheme = {
     none: visibility.none,
     visible: visibility.visible,
   },
-  body: '#363537',
-  text: '#FAFAFA',
-  wordCardText: '#363537',
-  toggleBorder: '#6B8096',
-  background: '#999',
-  wordCardBackground: '#FFF',
-  backgroundHover: '#FAFAFA',
-  textHover: '#363537',
+  width: {
+    auto: size.auto,
+    none: size.none,
+  },
+  height: {
+    auto: size.auto,
+    none: size.none,
+  },
+  body: colors.bodyDark,
+  text: colors.textDark,
+  wordCardText: colors.text,
+  toggleBorder: colors.toggleBorder,
+  background: colors.background,
+  wordCardBackground: colors.body,
+  backgroundHover: colors.textDark,
+  textHover: colors.text,
   fontSize: {
     xs: font.xs,
     sm: font.sm,

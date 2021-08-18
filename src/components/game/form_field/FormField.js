@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Input } from './Input';
+import { Input } from '../../reusables/Input';
 import { Label } from './Label';
 
 const FormField = React.forwardRef(
@@ -42,6 +42,9 @@ const FormField = React.forwardRef(
           placeholder={placeholder}
           checked={selectedRadio === id}
           visibility="none"
+          props="text"
+          width="none"
+          height="none"
         ></Input>
       </>
     );
