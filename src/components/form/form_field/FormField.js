@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Input } from './Input';
+import { Input } from '../../reusables/Input';
 import { Label } from './Label';
 
 const FormField = React.forwardRef(
@@ -17,6 +17,8 @@ const FormField = React.forwardRef(
           value={value}
           placeholder={placeholder}
           mt="sm"
+          width="auto"
+          height="auto"
         ></Input>
       </>
     );
