@@ -12,8 +12,15 @@ const Button = ({ className, onClick, type, children }) => {
 const StyledButton = styled(Button)`
   cursor: pointer;
   padding: 0.6rem 1.2rem;
-  font-size: ${({ props, theme }) => theme.fontSize[props]};
-  background-color: ${({ props, theme }) => theme[props]};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: ${({ theme }) => theme.text};
+  font-size: ${({ fontSize, theme }) => theme.fontSize[fontSize]};
+  background-color: ${({ theme }) => theme.body};
+  width: ${({ width, theme }) => theme.width[width]};
+  border-radius: ${({ radius, theme }) => theme.radius[radius]};
+  border: 1px solid ${({ theme }) => theme.backgroundHover};
   &:hover {
     color: ${({ theme }) => theme.textHover};
     background: ${({ theme }) => theme.backgroundHover};

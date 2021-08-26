@@ -31,6 +31,7 @@ export const GlobalStyles = createGlobalStyle`
         font-family: inherit;
         border: 0;
         padding: 0;
+        margin: 0;
     }
 
     a, a:hover, a:focus, a:active {
@@ -47,24 +48,11 @@ export const GlobalStyles = createGlobalStyle`
         width: 80vw;
     }
 
-    .dictionary_module {
-        z-index: 0;
-        display: flex;
-        position: relative;
-        flex-direction: column;
-        padding-top: 5rem;
-    }
-
     .dictionary_container {
         list-style: none;
         padding: 1rem 0 0;
     }
 
-    .search_bar {
-        position: fixed;
-        top: 6rem;
-        left: 1rem;
-    }
 
     .pagination {
         display: grid;
