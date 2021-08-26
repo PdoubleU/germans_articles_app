@@ -19,7 +19,6 @@ export const DictionaryContext = React.createContext({
 
 export const DictionaryProvider = ({ children }) => {
   const [localDictionary, setLocalDictionary] = useState();
-  const [filteredList, setFilteredList] = useState();
   const [currentState, updateState] = useFiniteStateMachine();
 
   const { FETCH_DATA, FETCH_DATA_SUCCESS, FETCH_DATA_ERROR } = setOfActions;

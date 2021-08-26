@@ -150,7 +150,9 @@ const DisplayGame = () => {
               <div></div>
             )}
             {!isPlayDisabled ? (
-              <StyledButton onClick={initiateGame}>Play</StyledButton>
+              <StyledButton as="button" onClick={initiateGame}>
+                Play
+              </StyledButton>
             ) : (
               <div></div>
             )}

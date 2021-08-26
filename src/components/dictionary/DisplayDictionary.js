@@ -3,6 +3,7 @@ import { DictionaryContext } from '../../providers/DictionaryProvider';
 import WordCard from './word_card/word_card.js';
 import ReactPaginate from 'react-paginate';
 import SearchBar from './search_bar/search_bar';
+import StyledDictionaryModule from './StyledDictionaryModule';
 
 const DisplayDictionary = () => {
   const ctx = useContext(DictionaryContext);
@@ -38,7 +39,7 @@ const DisplayDictionary = () => {
   };
 
   return (
-    <span className="dictionary_module">
+    <StyledDictionaryModule>
       <SearchBar />
       <ul className="dictionary_container">
         {!ctx.localDictionary ? (
@@ -60,7 +61,7 @@ const DisplayDictionary = () => {
         pageClassName={'page'}
         activeClassName={'active'}
       />
-    </span>
+    </StyledDictionaryModule>
   );
 };
 

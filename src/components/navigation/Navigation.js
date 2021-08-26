@@ -11,10 +11,12 @@ const Navbar = ({ className, children }) => {
     <nav className={className}>
       {children}
       <Link to="/">
-        <StyledButton>Home</StyledButton>
+        <StyledButton as="button" fontSize="sm">
+          Home
+        </StyledButton>
       </Link>
       {!cxt.loading && cxt.isLogged ? (
-        <StyledButton as="button" onClick={cxt.logOut} props="sm">
+        <StyledButton as="button" onClick={cxt.logOut} fontSize="sm">
           Log out
         </StyledButton>
       ) : null}
@@ -35,6 +37,11 @@ const StyledNavbar = styled(Navbar)`
   left: 0;
   right: 0;
   z-index: 100;
+  & > :first-child {
+    position: absolute;
+    top: calc(100vh - 3.5rem);
+    left: 1rem;
+  }
 `;
 
 export default StyledNavbar;

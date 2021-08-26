@@ -30,6 +30,12 @@ const size = {
   auto: 'auto',
   max: '100%',
   none: '0',
+  fixed: '2.5rem',
+};
+
+const radius = {
+  default: '0',
+  rounded: '50%',
 };
 
 export const lightTheme = {
@@ -40,10 +46,12 @@ export const lightTheme = {
   width: {
     auto: size.auto,
     none: size.none,
+    fixed: size.fixed,
   },
   height: {
     auto: size.auto,
     none: size.none,
+    fixed: size.fixed,
   },
   body: colors.body,
   text: colors.text,
@@ -51,7 +59,7 @@ export const lightTheme = {
   toggleBorder: colors.body,
   background: colors.bodyDark,
   wordCardBackground: colors.bodyDark,
-  backgroundHover: colors.textDark,
+  backgroundHover: colors.text,
   textHover: colors.body,
   fontSize: {
     xs: font.xs,
@@ -65,6 +73,10 @@ export const lightTheme = {
     md: margins.md,
     lg: margins.lg,
   },
+  radius: {
+    default: radius.default,
+    rounded: radius.rounded,
+  },
 };
 
 export const darkTheme = {
@@ -75,10 +87,12 @@ export const darkTheme = {
   width: {
     auto: size.auto,
     none: size.none,
+    fixed: size.fixed,
   },
   height: {
     auto: size.auto,
     none: size.none,
+    fixed: size.fixed,
   },
   body: colors.bodyDark,
   text: colors.textDark,
@@ -99,5 +113,9 @@ export const darkTheme = {
     sm: margins.sm,
     md: margins.md,
     lg: margins.lg,
+  },
+  radius: {
+    default: radius.default,
+    rounded: radius.rounded,
   },
 };
