@@ -14,6 +14,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 Then click login, enter 'user@zubairnews.com' as username and 'user123' as password. 
 
-If you'd like to create a new account, just use 'sign in' option. And confirm email. 
+If you'd like to create a new account, just use 'sign in' option. A confirmation message will be send to your email, click the link there to continue.
 
 Enjoy!
