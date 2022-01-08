@@ -10,7 +10,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 # How to use?
 
-[Just open the link: ](https://germans-articles-app.netlify.app/)
+[Just open the link](https://germans-articles-app.netlify.app/)
 
 Then click login, enter 'user@zubairnews.com' as username and 'user123' as password. 
 
