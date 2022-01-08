@@ -46,13 +46,23 @@ export const GlobalStyles = createGlobalStyle`
 
     span.container {
         width: 80vw;
+        @media (min-width: 720px){
+            width: 40vw;
+        }
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     .dictionary_container {
         list-style: none;
         padding: 1rem 0 0;
+        align-self: center;
+        width: 100%;
+        @media (min-width: 720px){
+            width: 80%;
+        }
     }
-
 
     .pagination {
         display: grid;
@@ -60,6 +70,11 @@ export const GlobalStyles = createGlobalStyle`
         grid-auto-columns: auto;
         grid-template-rows: 1fr;
         list-style: none;
+        width: 80%;
+        @media (min-width: 720px){
+            width: 45%;
+        }
+        align-self: center;
     }
 
     .pagination > li {

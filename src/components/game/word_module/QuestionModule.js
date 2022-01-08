@@ -10,6 +10,7 @@ const StyledQuestionModule = styled.div`
   width: 100%;
   & > h2 {
     width: 100%;
+    text-align: center;
   }
   & > h2.positive {
     color: green;
