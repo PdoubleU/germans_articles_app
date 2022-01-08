@@ -7,3 +7,11 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 1. Front End: React (hooks)
 2. Backend: Netlify (server for the application) and FaunaDB (as a database for dictionary).
+
+## How to use?
+
+Just open the link: 
+
+Then click login, enter user@zubairnews.com as username and password as password. 
+
+If you'd like to create a new account, just use 'sign in' option. And confirm email. 
